@@ -24,3 +24,18 @@ Ns = float(input("Number of cells connected in series = "))
 T = float(input("Panel temperature (°C) = ")) + 273.15
 
 G = float(input("Solar irradiation (W/m²) = "))
+
+
+#Variables
+
+Vt = (K*T)/Q  #Thermal voltage at T (V)
+
+Ipv = (Isc_ref + (Ki/100)*Isc_ref*(T - T_REF))*(G/G_REF)    #Photocurrent (A)
+
+Isc = Isc_ref + (Ki/100)*Isc_ref*(T - T_REF)    #Short circuit current at T (A)
+
+Voc = Voc_ref + (Kv/100)*Voc_ref*(T - T_REF)    #Open circuit voltage at T (V)
+
+Io_ref = Isc_ref/(exp(Voc_ref/(n*Ns*VT_REF)) - 1)   #Saturation current at STC (A)
+
+Io = Isc/(exp(Voc/(n*Ns*Vt)) - 1)   #Saturation current at T (A)
