@@ -1,4 +1,5 @@
-
+from config import *
+from numpy import exp
 
 
 #Panel specifications
