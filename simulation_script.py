@@ -41,6 +41,6 @@ Io_ref = Isc_ref/(exp(Voc_ref/(n*Ns*VT_REF)) - 1)   #Saturation current at STC (
 Io = Isc/(exp(Voc/(n*Ns*Vt)) - 1)   #Saturation current at T (A)
 
 
-V = [i for i in arange(0, Voc, 0.1)]    
-I = []
-P = []
+voltage = [i for i in arange(0, Voc, 0.1)]    
+current = []
+power = []
