@@ -1,5 +1,5 @@
 from config import *
-from numpy import exp
+from numpy import exp, arange
 
 
 #Panel specifications
@@ -26,7 +26,7 @@ T = float(input("Panel temperature (°C) = ")) + 273.15
 G = float(input("Solar irradiation (W/m²) = "))
 
 
-#Variables
+Pmax_ref = Imp_ref * Vmp_ref    #Maximum power at STC (W)
 
 Vt = (K*T)/Q  #Thermal voltage at T (V)
 
@@ -39,3 +39,8 @@ Voc = Voc_ref + (Kv/100)*Voc_ref*(T - T_REF)    #Open circuit voltage at T (V)
 Io_ref = Isc_ref/(exp(Voc_ref/(n*Ns*VT_REF)) - 1)   #Saturation current at STC (A)
 
 Io = Isc/(exp(Voc/(n*Ns*Vt)) - 1)   #Saturation current at T (A)
+
+
+V = [i for i in arange(0, Voc, 0.1)]    
+I = []
+P = []
