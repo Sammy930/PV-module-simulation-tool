@@ -1,5 +1,6 @@
 from config import *
 from newton_approximation import approximate_root
+from resistance_estimation import estimate_resistance
 from numpy import exp, arange
 
 
@@ -41,14 +42,11 @@ Io_ref = Isc_ref/(exp(Voc_ref/(n*Ns*VT_REF)) - 1)   #Saturation current at STC (
 
 Io = Isc/(exp(Voc/(n*Ns*Vt)) - 1)   #Saturation current at T (A)
 
-Rs = 0
-
-Rp = 300
-
+R = estimate_resistance(Voc, Isc, Iph, Imp_ref, Vmp_ref, Pmax_ref, Io, Vt, Ns, n)
+Rp, Rs = R[0], R[1]
 
 voltage = [i for i in arange(0, Voc, 0.1)]    
 current = []
-power = []
 
 
 for i in range(0, len(voltage)):
