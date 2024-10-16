@@ -2,6 +2,8 @@ from config import *
 from newton_approximation import approximate_root
 from resistance_estimation import estimate_resistance
 from numpy import exp, arange, multiply
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 
 
 #Panel specifications
@@ -56,3 +58,16 @@ for i in range(0, len(voltage)):
     current.append(root)
 
 power = multiply(current, voltage)
+
+
+#Results visualization
+
+fig, ax = plt.subplots(ncols=2, sharex=True)
+
+ax1 = ax[0].plot(voltage, current, "r")
+ax[0].grid()
+
+ax2 = ax[1].plot(voltage, power, "b")
+ax[1].grid()
+
+plt.show()
