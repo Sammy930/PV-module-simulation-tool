@@ -29,4 +29,5 @@ def estimate_resistance(Voc, Isc, Iph, Imp, Vmp, Pmax, Io, Vt, Ns, n, e = 1e-6):
         err = abs(Pmax_calculated - Pmax)
         Rp = abs((voltage[0] - voltage[1])/(current[1] - current[0]))
         Rs = (voltage[-2] - voltage[-1])/(current[-1] - current[-2])
+        
         return Rp, Rs

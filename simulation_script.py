@@ -1,7 +1,7 @@
 from config import *
 from newton_approximation import approximate_root
 from resistance_estimation import estimate_resistance
-from numpy import exp, arange
+from numpy import exp, arange, multiply
 
 
 #Panel specifications
@@ -54,3 +54,5 @@ for i in range(0, len(voltage)):
     f_prime = lambda I : -Io*Rs/Vt/Ns/n*exp((voltage[i] + I*Rs)/Vt/Ns/n) - Rs/Rp - 1
     root = approximate_root(f, f_prime, Isc)
     current.append(root)
+
+power = multiply(current, voltage)
