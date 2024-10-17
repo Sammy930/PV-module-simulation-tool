@@ -63,6 +63,7 @@ power = multiply(current, voltage)
 
 fig = plt.figure()
 fig.suptitle("Solar panel characteristic curves")
+fig.set_size_inches(8, 6.75)
 
 IV = plt.subplot(211)
 IV.plot(voltage, current, "b")
