@@ -1,7 +1,8 @@
+from math import ceil
 from config import *
 from newton_approximation import approximate_root
 from resistance_estimation import estimate_resistance
-from numpy import exp, arange, multiply, where
+from numpy import exp, arange, multiply
 import matplotlib.pyplot as plt
 
 
@@ -65,9 +66,18 @@ for i in range(0, len(voltage)):
     current.append(root)
 
 
+#Simulation results
+
 power = multiply(current, voltage)
 Pmax = max(power)
 Vmp = voltage[list(power).index(Pmax)]
+Imp = current[list(power).index(Pmax)]
+fill_factor = Pmax/(current[0]*voltage[-1])
+
+print("\n-----------------------------------RESULTS-----------------------------------\n")
+print(f"The maximum power yielded by the module is: {ceil((Pmax*100))/100} Watt")
+print(f"The max power point is estimated at I = {ceil((Imp*100))/100} Amps and  V = {ceil((Vmp*100))/100} Volts")
+print(f"Fill Factor = {ceil((fill_factor*100))/100}")
 
 
 #Results visualization
