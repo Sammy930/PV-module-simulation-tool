@@ -66,11 +66,14 @@ fig.suptitle("Solar panel characteristic curves")
 
 IV = plt.subplot(211)
 IV.plot(voltage, current, "b")
+IV.set_xlim(0)
+IV.set_ylim(0, 1.12*max(current))
 plt.setp(IV.get_xticklabels(), visible=False)
 IV.grid()
 
 PV = plt.subplot(212, sharex=IV)
 PV.plot(voltage, power, "r")
+PV.set_ylim(0, 1.12*max(power))
 PV.grid()
 
 plt.subplots_adjust(hspace=0)
