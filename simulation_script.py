@@ -17,25 +17,25 @@ font = {
 #Panel specifications
 #STC = Standard Test Conditions
 
-Isc_ref = 5.95
+Isc_ref = float(input("Short circuit current at STC (A) = "))
 
-Voc_ref = 22.4
+Voc_ref = float(input("Open circuit voltage at STC (V) = "))
 
-Imp_ref = 5.62
+Imp_ref = float(input("Maximum power current at STC (A) = "))
 
-Vmp_ref = 17.8
+Vmp_ref = float(input("Maximum power voltage at STC (V) = "))
 
-Ki = 0.06
+Ki = float(input("Temperature coefficient of the current = "))
 
-Kv = -0.35
+Kv = float(input("Temperature coefficient of the voltage = "))
 
-n = 1
+n = float(input("Ideality factor of the junction = "))
 
-Ns = 36
+Ns = float(input("Number of cells connected in series = "))
 
-T = 25 + 273.15
+T = float(input("Panel temperature (°C) = ")) + 273.15
 
-G = 1000
+G = float(input("Solar irradiation (W/m²) = "))
 
 
 Pmax_ref = Imp_ref * Vmp_ref    #Maximum power at STC (W)
@@ -58,6 +58,8 @@ Rp, Rs = R[0], R[1]
 voltage = [i for i in arange(0, Voc, 0.1)]    
 current = []
 
+
+#Approximate I for each value of V
 
 for i in range(0, len(voltage)):
     f = lambda I : Iph - Io*(exp((voltage[i] + I*Rs)/Vt/Ns/n) - 1) - (voltage[i] + I*Rs)/Rp - I
