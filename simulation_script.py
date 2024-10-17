@@ -69,14 +69,18 @@ power = multiply(current, voltage)
 Pmax = max(power)
 Vmp = voltage[list(power).index(Pmax)]
 
+
 #Results visualization
 
 fig = plt.figure()
 fig.suptitle("SOLAR PANEL CHARACTERISTIC CURVES", weight="bold", color="#060621", size="14")
 fig.set_size_inches(8, 6.75)
-fig.patch.set_facecolor('#cacfe6')
+fig.patch.set_facecolor("#cacfe6")
 
 IV = plt.subplot(211)
+PV = plt.subplot(212, sharex=IV)
+plt.subplots_adjust(hspace=0)
+
 IV.plot(voltage, current, "b", linewidth=2, label="I = f(V)")
 IV.set_xlim(0)
 IV.set_ylim(0, 1.12*max(current))
@@ -85,14 +89,12 @@ IV.set_ylabel("Current\n(Amp)", fontdict=font, rotation=0, loc="center", labelpa
 IV.legend(loc="upper right")
 IV.grid()
 
-PV = plt.subplot(212, sharex=IV)
 PV.plot(voltage, power, "r", linewidth=2, label="P = f(V)")
-PV.plot(Vmp, Pmax, "b", marker="o", label="Max power point")
+PV.plot(Vmp, Pmax, "b", marker="o", label="Max power point")    #highlight max power point
 PV.set_ylim(0, 1.12*max(power))
 PV.set_xlabel("Voltage (Volt)", fontdict=font)
 PV.set_ylabel("Power\n(Watt)", fontdict=font, rotation=0, loc="center", labelpad=20)
 PV.legend(loc="upper center")
 PV.grid()
 
-plt.subplots_adjust(hspace=0)
 plt.show()
