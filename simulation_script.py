@@ -2,32 +2,31 @@ from config import *
 from newton_approximation import approximate_root
 from resistance_estimation import estimate_resistance
 from numpy import exp, arange, multiply
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
 #Panel specifications
 #STC = Standard Test Conditions
 
-Isc_ref = float(input("Short circuit current at STC (A) = "))
+Isc_ref = 5.95
 
-Voc_ref = float(input("Open circuit voltage at STC (V) = "))
+Voc_ref = 22.4
 
-Imp_ref = float(input("Maximum power current at STC (A) = "))
+Imp_ref = 5.62
 
-Vmp_ref = float(input("Maximum power voltage at STC (V) = "))
+Vmp_ref = 17.8
 
-Ki = float(input("Temperature coefficient of the current = "))
+Ki = 0.06
 
-Kv = float(input("Temperature coefficient of the voltage = "))
+Kv = -0.35
 
-n = float(input("Ideality factor of the junction = "))
+n = 1
 
-Ns = float(input("Number of cells connected in series = "))
+Ns = 36
 
-T = float(input("Panel temperature (°C) = ")) + 273.15
+T = 25 + 273.15
 
-G = float(input("Solar irradiation (W/m²) = "))
+G = 1000
 
 
 Pmax_ref = Imp_ref * Vmp_ref    #Maximum power at STC (W)
@@ -62,12 +61,15 @@ power = multiply(current, voltage)
 
 #Results visualization
 
-fig, ax = plt.subplots(ncols=2, sharex=True)
+fig = plt.figure()
+fig.suptitle("Solar panel characteristic curves")
 
-ax1 = ax[0].plot(voltage, current, "r")
-ax[0].grid()
+IV = plt.subplot(211)
+IV.plot(voltage, current, "b")
+IV.grid()
 
-ax2 = ax[1].plot(voltage, power, "b")
-ax[1].grid()
+PV = plt.subplot(212, sharex=IV)
+PV.plot(voltage, power, "r")
+PV.grid()
 
 plt.show()
