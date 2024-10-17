@@ -53,7 +53,7 @@ Io_ref = Isc_ref/(exp(Voc_ref/(n*Ns*VT_REF)) - 1)   #Saturation current at STC (
 Io = Isc/(exp(Voc/(n*Ns*Vt)) - 1)   #Saturation current at T (A)
 
 R = estimate_resistance(Voc, Isc, Iph, Imp_ref, Vmp_ref, Pmax_ref, Io, Vt, Ns, n)
-Rp, Rs = R[0], R[1]
+Rp, Rs = R[0], R[1]     #Series and shunt resistances
 
 voltage = [i for i in arange(0, Voc, 0.1)]    
 current = []
