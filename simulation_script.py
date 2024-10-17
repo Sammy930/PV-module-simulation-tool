@@ -1,12 +1,12 @@
 from config import *
 from newton_approximation import approximate_root
 from resistance_estimation import estimate_resistance
-from numpy import exp, arange, multiply
+from numpy import exp, arange, multiply, where
 import matplotlib.pyplot as plt
 
 
 font = {
-    'family':'Helvetica Normal',
+    'family':'sans-serif',
     'color':'#060621',
     'weight':'bold',
     'size':'10'
@@ -64,8 +64,10 @@ for i in range(0, len(voltage)):
     root = approximate_root(f, f_prime, Isc)
     current.append(root)
 
-power = multiply(current, voltage)
 
+power = multiply(current, voltage)
+Pmax = max(power)
+Vmp = voltage[list(power).index(Pmax)]
 
 #Results visualization
 
@@ -85,6 +87,7 @@ IV.grid()
 
 PV = plt.subplot(212, sharex=IV)
 PV.plot(voltage, power, "r", linewidth=2, label="P = f(V)")
+PV.plot(Vmp, Pmax, "b", marker="o", label="Max power point")
 PV.set_ylim(0, 1.12*max(power))
 PV.set_xlabel("Voltage (Volt)", fontdict=font)
 PV.set_ylabel("Power\n(Watt)", fontdict=font, rotation=0, loc="center", labelpad=20)
