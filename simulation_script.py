@@ -4,12 +4,14 @@ from resistance_estimation import estimate_resistance
 from numpy import exp, arange, multiply
 import matplotlib.pyplot as plt
 
+
 font = {
-    'family':'sans-serif',
+    'family':'Helvetica Normal',
     'color':'#060621',
     'weight':'bold',
     'size':'10'
 }
+
 
 #Panel specifications
 #STC = Standard Test Conditions
@@ -68,11 +70,12 @@ power = multiply(current, voltage)
 #Results visualization
 
 fig = plt.figure()
-fig.suptitle("Solar panel characteristic curves", weight="bold", color="#060621", size="14")
+fig.suptitle("SOLAR PANEL CHARACTERISTIC CURVES", weight="bold", color="#060621", size="14")
 fig.set_size_inches(8, 6.75)
+fig.patch.set_facecolor('#cacfe6')
 
 IV = plt.subplot(211)
-IV.plot(voltage, current, "b", label="I = f(V)")
+IV.plot(voltage, current, "b", linewidth=2, label="I = f(V)")
 IV.set_xlim(0)
 IV.set_ylim(0, 1.12*max(current))
 plt.setp(IV.get_xticklabels(), visible=False)
@@ -81,7 +84,7 @@ IV.legend(loc="upper right")
 IV.grid()
 
 PV = plt.subplot(212, sharex=IV)
-PV.plot(voltage, power, "r", label="P = f(V)")
+PV.plot(voltage, power, "r", linewidth=2, label="P = f(V)")
 PV.set_ylim(0, 1.12*max(power))
 PV.set_xlabel("Voltage (Volt)", fontdict=font)
 PV.set_ylabel("Power\n(Watt)", fontdict=font, rotation=0, loc="center", labelpad=20)
