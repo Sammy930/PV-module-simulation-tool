@@ -1,5 +1,11 @@
 # Constants
 
+FONT = {
+    'family':'sans-serif',
+    'color':'#060621',
+    'weight':'bold',
+    'size':'10'
+}
 
 K = 1.3806503e-23   #Boltzmann constant (J/K)
 
