@@ -89,15 +89,15 @@ IV.plot(voltage, current, "b", linewidth=2, label="I = f(V)")
 IV.set_xlim(0)
 IV.set_ylim(0, 1.12*max(current))
 plt.setp(IV.get_xticklabels(), visible=False)
-IV.set_ylabel("Current\n(Amp)", fontdict=font, rotation=0, loc="center", labelpad=32)
+IV.set_ylabel("Current\n(Amp)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
 IV.legend(loc="upper right")
 IV.grid()
 
 PV.plot(voltage, power, "r", linewidth=2, label="P = f(V)")
 PV.plot(Vmp, Pmax, "b", marker="o", label="Max power point")    #highlight max power point
 PV.set_ylim(0, 1.12*max(power))
-PV.set_xlabel("Voltage (Volt)", fontdict=font)
-PV.set_ylabel("Power\n(Watt)", fontdict=font, rotation=0, loc="center", labelpad=20)
+PV.set_xlabel("Voltage (Volt)", fontdict=FONT)
+PV.set_ylabel("Power\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=20)
 PV.legend(loc="upper center")
 PV.grid()
 
