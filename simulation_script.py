@@ -6,14 +6,6 @@ from numpy import exp, arange, multiply
 import matplotlib.pyplot as plt
 
 
-font = {
-    'family':'sans-serif',
-    'color':'#060621',
-    'weight':'bold',
-    'size':'10'
-}
-
-
 #Panel specifications
 #STC = Standard Test Conditions
 
