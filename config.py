@@ -1,5 +1,3 @@
-# Constants
-
 FONT = {
     'family':'sans-serif',
     'color':'#060621',
