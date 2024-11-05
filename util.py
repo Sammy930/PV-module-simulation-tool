@@ -1,11 +1,26 @@
+from types import FunctionType
 from config import VT_REF
-from newton_approximation import approximate_root
 from numpy import exp, inf, arange, multiply
 
-def estimate_resistance(Voc, Isc, Iph, Imp, Vmp, Pmax, Io, Vt, Ns, n, e = 1e-6):    
+
+def approximate_root(f: FunctionType, f_prime: FunctionType, x0: float, e = 1e-6) -> float :
+    """implements the Newton-Raphson approximation method to find the root of a
+    given equation"""
+
+    while abs(f(x0)) > e:
+        if f_prime(x0) != 0:
+            x1 = x0 - (f(x0)/f_prime(x0))
+            x0 = x1
+        else:
+            raise Exception('the Newton-Raphson approximation failed because f\'(x)=0')
+
+    return x0
+
+
+def estimate_resistance(Voc, Isc, Iph, Imp, Vmp, Pmax, Io, Vt, Ns, n, e = 1e-6) -> float :
     """determines the values of the series and parallel resistances by making an
     initial estimation of both values and then improving it to best fit
-    over the calculated value of the maximum power"""
+    over the calculated maximum power value"""
 
     #initial estimations
     Rs = 0
@@ -15,7 +30,7 @@ def estimate_resistance(Voc, Isc, Iph, Imp, Vmp, Pmax, Io, Vt, Ns, n, e = 1e-6):
 
     while err > e:
 
-        voltage = [i for i in arange(0, Voc, 0.1)]    
+        voltage = [i for i in arange(0, Voc, 0.1)]
         current = []
 
         for i in range(0, len(voltage)):
@@ -30,4 +45,4 @@ def estimate_resistance(Voc, Isc, Iph, Imp, Vmp, Pmax, Io, Vt, Ns, n, e = 1e-6):
         Rp = abs((voltage[0] - voltage[1])/(current[1] - current[0]))
         Rs = (voltage[-2] - voltage[-1])/(current[-1] - current[-2])
         
-        return Rp, Rs
+    return Rp, Rs

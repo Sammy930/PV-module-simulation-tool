@@ -1,7 +1,6 @@
 from math import ceil
 from config import *
-from newton_approximation import approximate_root
-from resistance_estimation import estimate_resistance
+from util import approximate_root, estimate_resistance
 from numpy import exp, arange, multiply
 import matplotlib.pyplot as plt
 
