@@ -1,7 +1,7 @@
 from math import ceil
 from config import *
 from util import approximate_root, estimate_resistance
-from numpy import exp, arange, multiply
+from numpy import exp, arange, multiply, inf
 import matplotlib.pyplot as plt
 
 
@@ -33,18 +33,16 @@ Pmax_ref = Imp_ref * Vmp_ref    #Maximum power at STC (W)
 
 Vt = (K*T)/Q  #Thermal voltage at T (V)
 
-Iph = (Isc_ref + (Ki/100)*Isc_ref*(T - T_REF))*(G/G_REF)    #Photocurrent (A)
+Iph = Isc_ref*(G/G_REF) + Ki*(T - T_REF)    #Photocurrent (A)
 
-Isc = Isc_ref + (Ki/100)*Isc_ref*(T - T_REF)    #Short circuit current at T (A)
+Isc = Isc_ref    #Short circuit current at T (A)
 
-Voc = Voc_ref + (Kv/100)*Voc_ref*(T - T_REF)    #Open circuit voltage at T (V)
-
-Io_ref = Isc_ref/(exp(Voc_ref/(n*Ns*VT_REF)) - 1)   #Saturation current at STC (A)
+Voc = Voc_ref + Kv*(T - T_REF)    #Open circuit voltage at T (V)
 
 Io = Isc/(exp(Voc/(n*Ns*Vt)) - 1)   #Saturation current at T (A)
 
-R = estimate_resistance(Voc, Isc, Iph, Imp_ref, Vmp_ref, Pmax_ref, Io, Vt, Ns, n)
-Rp, Rs = R[0], R[1]     #Series and shunt resistances
+Rp, Rs = inf, 0     #Series and shunt resistances
+
 
 voltage = [i for i in arange(0, Voc, 0.1)]    
 current = []
