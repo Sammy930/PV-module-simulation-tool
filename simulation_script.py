@@ -31,15 +31,15 @@ G = float(input("Solar irradiation (W/m²) = "))
 
 Pmax_ref = Imp_ref * Vmp_ref    #Maximum power at STC (W)
 
-Vt = (K*T)/Q  #Thermal voltage at T (V)
+Vt = (K*T)/Q    #Thermal voltage at T (V)
 
 Iph = Isc_ref*(G/G_REF) + Ki*(T - T_REF)    #Photocurrent (A)
 
 Voc = Voc_ref + Kv*(T - T_REF)    #Open circuit voltage at T (V)
 
-Io = Isc_ref/(exp(Voc/(n*Ns*Vt)) - 1)   #Saturation current at T (A)
+Io = Isc_ref/(exp(Voc/(n*Ns*Vt)) - 1)    #Saturation current at T (A)
 
-Rp, Rs = inf, 0     #Series and shunt resistances
+Rp, Rs = inf, 0    #Series and shunt resistances
 
 
 voltage = [i for i in arange(0, Voc, 0.1)]    
@@ -68,7 +68,7 @@ print("\n-----------------------------------RESULTS-----------------------------
 print(f"The maximum power yielded by the module is: {ceil((Pmax*100))/100} Watt")
 print(f"The max power point is estimated at I = {ceil((Imp*100))/100} Amps and  V = {ceil((Vmp*100))/100} Volts")
 print(f"Fill Factor = {ceil((fill_factor*100))/100}")
-print(f"Approximated resistance values:    Rs = {ceil(R[1]*100)/100} Ohm    Rsh = {ceil(R[0]*100)/100} Ohm")
+print(f"Approximated resistance values:   Rs = {ceil(R[1]*100)/100} Ω    Rp = {ceil(R[0]*100)/100} Ω")
 
 #Results visualization
 
