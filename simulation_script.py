@@ -35,11 +35,9 @@ Vt = (K*T)/Q  #Thermal voltage at T (V)
 
 Iph = Isc_ref*(G/G_REF) + Ki*(T - T_REF)    #Photocurrent (A)
 
-Isc = Isc_ref    #Short circuit current at T (A)
-
 Voc = Voc_ref + Kv*(T - T_REF)    #Open circuit voltage at T (V)
 
-Io = Isc/(exp(Voc/(n*Ns*Vt)) - 1)   #Saturation current at T (A)
+Io = Isc_ref/(exp(Voc/(n*Ns*Vt)) - 1)   #Saturation current at T (A)
 
 Rp, Rs = inf, 0     #Series and shunt resistances
 
@@ -53,7 +51,7 @@ current = []
 for i in range(0, len(voltage)):
     f = lambda I : Iph - Io*(exp((voltage[i] + I*Rs)/Vt/Ns/n) - 1) - (voltage[i] + I*Rs)/Rp - I
     f_prime = lambda I : -Io*Rs/Vt/Ns/n*exp((voltage[i] + I*Rs)/Vt/Ns/n) - Rs/Rp - 1
-    root = approximate_root(f, f_prime, Isc)
+    root = approximate_root(f, f_prime, Isc_ref)
     current.append(root)
 
 
@@ -64,12 +62,13 @@ Pmax = max(power)
 Vmp = voltage[list(power).index(Pmax)]
 Imp = current[list(power).index(Pmax)]
 fill_factor = Pmax/(current[0]*voltage[-1])
+R = estimate_resistance(Voc, Isc_ref, Iph, Imp_ref, Vmp_ref, Io, Vt, Ns, n)
 
 print("\n-----------------------------------RESULTS-----------------------------------\n")
 print(f"The maximum power yielded by the module is: {ceil((Pmax*100))/100} Watt")
 print(f"The max power point is estimated at I = {ceil((Imp*100))/100} Amps and  V = {ceil((Vmp*100))/100} Volts")
 print(f"Fill Factor = {ceil((fill_factor*100))/100}")
-
+print(f"Approximated resistance values:    Rs = {ceil(R[1]*100)/100} Ohm    Rsh = {ceil(R[0]*100)/100} Ohm")
 
 #Results visualization
 
