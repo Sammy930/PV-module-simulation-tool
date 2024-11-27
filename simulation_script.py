@@ -39,7 +39,8 @@ Voc = Voc_ref + Kv*(T - T_REF)    #Open circuit voltage at T (V)
 
 Io = Isc_ref/(exp(Voc/(n*Ns*Vt)) - 1)    #Saturation current at T (A)
 
-Rp, Rs = inf, 0    #Series and shunt resistances
+R = estimate_resistance(Voc, Isc_ref, Iph, Imp_ref, Vmp_ref, Io, Vt, Ns, n)
+Rp, Rs = R[0], R[1]    #Series and shunt resistances
 
 
 voltage = [i for i in arange(0, Voc, 0.1)]    
