@@ -39,8 +39,16 @@ Voc = Voc_ref + Kv*(T - T_REF)    #Open circuit voltage at T (V)
 
 Io = Isc_ref/(exp(Voc/(n*Ns*Vt)) - 1)    #Saturation current at T (A)
 
-R = estimate_resistance(Voc, Isc_ref, Iph, Imp_ref, Vmp_ref, Io, Vt, Ns, n)
-Rp, Rs = R[0], R[1]    #Series and shunt resistances
+#Series and shunt resistances
+if (Pmax_ref > 0)  and (Pmax_ref < 211.572):
+    R = estimate_resistance(Voc, Isc_ref, Iph, Imp_ref, Vmp_ref, Io, Vt, Ns, n)
+    Rp, Rs = R[0], R[1] 
+
+elif Pmax_ref >= 211.572:
+    Rp, Rs = inf, 0
+
+else:
+    raise ValueError("Pmax cannot be less than or equal to zero, please verify the entered parameters")
 
 
 voltage = [i for i in arange(0, Voc, 0.1)]    
@@ -63,13 +71,11 @@ Pmax = max(power)
 Vmp = voltage[list(power).index(Pmax)]
 Imp = current[list(power).index(Pmax)]
 fill_factor = Pmax/(current[0]*voltage[-1])
-R = estimate_resistance(Voc, Isc_ref, Iph, Imp_ref, Vmp_ref, Io, Vt, Ns, n)
 
 print("\n-----------------------------------RESULTS-----------------------------------\n")
 print(f"The maximum power yielded by the module is: {ceil((Pmax*100))/100} Watt")
 print(f"The max power point is estimated at I = {ceil((Imp*100))/100} Amps and  V = {ceil((Vmp*100))/100} Volts")
 print(f"Fill Factor = {ceil((fill_factor*100))/100}")
-print(f"Approximated resistance values:   Rs = {ceil(R[1]*100)/100} Ω    Rp = {ceil(R[0]*100)/100} Ω")
 
 #Results visualization
 

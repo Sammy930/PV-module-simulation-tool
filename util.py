@@ -1,6 +1,6 @@
 from types import FunctionType
 from config import VT_REF
-from numpy import exp, arange, multiply
+from numpy import exp, arange
 
 
 def approximate_root(f: FunctionType, f_prime: FunctionType, x0: float, e = 1e-6) -> float :
@@ -35,7 +35,7 @@ def estimate_resistance(Voc, Isc, Iph, Imp, Vmp, Io, Vt, Ns, n) -> float :
         root = approximate_root(f, f_prime, Isc)
         current.append(root)
     
-    Rp = ((voltage[0] - voltage[1])/(current[1] - current[0]))
+    Rp = (voltage[0] - voltage[1])/(current[1] - current[0])
     Rs = (voltage[-2] - voltage[-1])/(current[-1] - current[-2])
         
     return Rp, Rs
