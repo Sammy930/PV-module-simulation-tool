@@ -16,9 +16,9 @@ Imp_ref = float(input("Maximum power current at STC (A) = "))
 
 Vmp_ref = float(input("Maximum power voltage at STC (V) = "))
 
-Ki = float(input("Temperature coefficient of the current = "))
+Ki = float(input("Temperature coefficient of Isc (%/°C) = "))
 
-Kv = float(input("Temperature coefficient of the voltage = "))
+Kv = float(input("Temperature coefficient of Voc (%/°C) = "))
 
 n = float(input("Ideality factor of the junction = "))
 
