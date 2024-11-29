@@ -1,6 +1,6 @@
 from math import ceil
 from config import *
-from util import generate_iv
+from util import generate_iv, is_float_regex
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -26,6 +26,10 @@ T = float(input("\nAmbiant temperature (°C) = ")) + 273.15
 
 G = float(input("\nSolar irradiation (W/m²) = "))
 
+length = input("\nPanel length (optional) (cm) = ")
+
+width = input("\nPanel width (optional) (cm) = ")
+
 T = (Tn - 20)*G/800 + T    #Module temperature (°C)
 
 
@@ -46,6 +50,11 @@ print("\n-----------------------------------RESULTS-----------------------------
 print(f"The maximum power yielded by the module is: {ceil((Pmax*100))/100} Watt")
 print(f"The max power point is estimated at I = {ceil((Imp*100))/100} Amps and  V = {ceil((Vmp*100))/100} Volts")
 print(f"Fill Factor = {ceil((fill_factor*100))/100}")
+if is_float_regex(length) and is_float_regex(width):
+    A = float(length)*float(width)*1e-4
+    efficiency = (Pmax/(G*A))*100
+    print(f"Efficiency = {ceil((efficiency*100))/100} %")
+
 
 #Results visualization
 
