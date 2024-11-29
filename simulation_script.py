@@ -1,46 +1,46 @@
 from math import ceil
 from config import *
 from util import generate_iv
-from numpy import exp, arange, multiply, inf
+from numpy import exp, multiply, inf
 import matplotlib.pyplot as plt
 
 
-#Panel specifications
+#Module specifications
 #STC = Standard Test Conditions
 
 Isc_ref = float(input("Short circuit current at STC (A) = "))
 
-Voc_ref = float(input("Open circuit voltage at STC (V) = "))
+Voc_ref = float(input("\nOpen circuit voltage at STC (V) = "))
 
-Imp_ref = float(input("Maximum power current at STC (A) = "))
+Imp_ref = float(input("\nMaximum power current at STC (A) = "))
 
-Vmp_ref = float(input("Maximum power voltage at STC (V) = "))
+Vmp_ref = float(input("\nMaximum power voltage at STC (V) = "))
 
-Ki = float(input("Temperature coefficient of Isc (%/°C) = "))
+Ki = float(input("\nTemperature coefficient of Isc (%/°C) = "))
 
-Kv = float(input("Temperature coefficient of Voc (%/°C) = "))
+Kv = float(input("\nTemperature coefficient of Voc (%/°C) = "))
 
-Tn = float(input("NOCT (°C) = "))
+Tn = float(input("\nNOCT (°C) = "))
 
-n = float(input("Ideality factor of the junction = "))
+n = float(input("\nIdeality factor of the junction = "))
 
-Ns = float(input("Number of cells connected in series = "))
+Ns = float(input("\nNumber of cells connected in series = "))
 
-T = float(input("Ambiant temperature (°C) = ")) + 273.15
+T = float(input("\nAmbiant temperature (°C) = ")) + 273.15
 
-G = float(input("Solar irradiation (W/m²) = "))
-
+G = float(input("\nSolar irradiation (W/m²) = "))
 
 T = (Tn - 20)*G/800 + T    #Module temperature (°C)
+
 
 IV = generate_iv(Imp_ref, Vmp_ref, Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
 voltage = IV[0]
 current = IV[1]
+power = multiply(current, voltage)
 
 
 #Simulation results
 
-power = multiply(current, voltage)
 Pmax = max(power)
 Vmp = voltage[list(power).index(Pmax)]
 Imp = current[list(power).index(Pmax)]
@@ -75,7 +75,7 @@ PV.plot(Vmp, Pmax, "b", marker="o", label="Max power point")    #highlight max p
 PV.set_ylim(0, 1.12*max(power))
 PV.set_xlabel("Voltage (Volt)", fontdict=FONT)
 PV.set_ylabel("Power\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=20)
-PV.legend(loc="upper center")
+PV.legend(loc="upper left")
 PV.grid()
 
 plt.show()
