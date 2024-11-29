@@ -1,6 +1,4 @@
 from types import FunctionType
-from config import VT_REF
-from numpy import exp, arange
 
 
 def approximate_root(f: FunctionType, f_prime: FunctionType, x0: float, e = 1e-6) -> float :

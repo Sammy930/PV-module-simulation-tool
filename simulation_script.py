@@ -1,6 +1,6 @@
 from math import ceil
 from config import *
-from util import approximate_root, estimate_resistance
+from util import approximate_root
 from numpy import exp, arange, multiply, inf
 import matplotlib.pyplot as plt
 
@@ -46,7 +46,7 @@ Io = Isc_ref/(exp(Voc/(n*Ns*Vt)) - 1)    #Saturation current at T (A)
 Rp, Rs = inf, 0    #Series and shunt resistance
 
 
-voltage = [i for i in arange(0, Voc, 0.1)]    
+voltage = [i for i in arange(0, Voc, 0.1)].append(Voc)    
 current = []
 
 
