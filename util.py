@@ -1,9 +1,10 @@
+import re
 from types import FunctionType
 from config import *
 import numpy as np
 
 
-def approximate_root(f: FunctionType, f_prime: FunctionType, x0: float, e = 1e-6) -> float :
+def approximate_root(f: FunctionType, f_prime: FunctionType, x0: float, e: float = 1e-6) -> float :
     """implements the Newton-Raphson approximation method to find the root of a
     given equation"""
 
@@ -17,7 +18,7 @@ def approximate_root(f: FunctionType, f_prime: FunctionType, x0: float, e = 1e-6
     return x0
 
 
-def generate_iv(Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G) -> tuple:
+def generate_iv(Isc_ref: float, Voc_ref: float, Ki: float, Kv: float, n: float, Ns: float, T: float, G: float) -> tuple:
 
     Vt = (K*T)/Q    #Thermal voltage at T (V)
 
@@ -43,3 +44,8 @@ def generate_iv(Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G) -> tuple:
 
 
     return voltage, current
+
+
+def is_float_regex(value: str) -> bool:
+
+    return bool(re.match(r'^[-+]?[0-9]*\.?[0-9]+$', value))
