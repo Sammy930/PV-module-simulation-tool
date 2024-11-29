@@ -6,8 +6,8 @@ FONT = {
 }
 
 UNITS = {
-    'temperature' : 'celcius',    #[celcius/fahrenheit]
-    'length': 'mm'    #[mm/in]
+    'temperature':'celcius',    #[celcius/fahrenheit]
+    'length':'mm'    #[mm/in]
 }
 
 K = 1.3806503e-23   #Boltzmann constant (J/K)

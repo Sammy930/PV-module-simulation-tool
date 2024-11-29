@@ -33,8 +33,8 @@ if UNITS["length"] == "mm":
     length = input("\nPanel length (optional) (mm) = ")
     width = input("\nPanel width (optional) (mm) = ")
 elif UNITS["length"] == "in":
-        length = input("\nPanel length (optional) (in) = ")
-        width = input("\nPanel width (optional) (in) = ")   
+    length = input("\nPanel length (optional) (in) = ")
+    width = input("\nPanel width (optional) (in) = ")   
 
 T = (Tn - 20)*G/800 + T    #Module temperature (°C)
 
