@@ -1,7 +1,7 @@
 from math import ceil
 from config import *
 from util import generate_iv
-from numpy import exp, multiply, inf
+import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -11,10 +11,6 @@ import matplotlib.pyplot as plt
 Isc_ref = float(input("Short circuit current at STC (A) = "))
 
 Voc_ref = float(input("\nOpen circuit voltage at STC (V) = "))
-
-Imp_ref = float(input("\nMaximum power current at STC (A) = "))
-
-Vmp_ref = float(input("\nMaximum power voltage at STC (V) = "))
 
 Ki = float(input("\nTemperature coefficient of Isc (%/°C) = "))
 
@@ -33,10 +29,10 @@ G = float(input("\nSolar irradiation (W/m²) = "))
 T = (Tn - 20)*G/800 + T    #Module temperature (°C)
 
 
-IV = generate_iv(Imp_ref, Vmp_ref, Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
+IV = generate_iv(Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
 voltage = IV[0]
 current = IV[1]
-power = multiply(current, voltage)
+power = np.multiply(current, voltage)
 
 
 #Simulation results
