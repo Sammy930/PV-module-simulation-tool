@@ -1,6 +1,6 @@
 from math import ceil
 from config import *
-from util import approximate_root
+from util import generate_iv
 from numpy import exp, arange, multiply, inf
 import matplotlib.pyplot as plt
 
@@ -33,30 +33,9 @@ G = float(input("Solar irradiation (W/m²) = "))
 
 T = (Tn - 20)*G/800 + T    #Module temperature (°C)
 
-Pmax_ref = Imp_ref * Vmp_ref    #Maximum power at STC (W)
-
-Vt = (K*T)/Q    #Thermal voltage at T (V)
-
-Iph = Isc_ref*(G/G_REF) + Ki*(T - T_REF)    #Photocurrent (A)
-
-Voc = Voc_ref + Kv*(T - T_REF)    #Open circuit voltage at T (V)
-
-Io = Isc_ref/(exp(Voc/(n*Ns*Vt)) - 1)    #Saturation current at T (A)
-
-Rp, Rs = inf, 0    #Series and shunt resistance
-
-
-voltage = [i for i in arange(0, Voc + 1, 0.1)]
-current = []
-
-
-#Approximate I for each value of V
-
-for i in range(0, len(voltage)):
-    f = lambda I : Iph - Io*(exp((voltage[i] + I*Rs)/Vt/Ns/n) - 1) - (voltage[i] + I*Rs)/Rp - I
-    f_prime = lambda I : -Io*Rs/Vt/Ns/n*exp((voltage[i] + I*Rs)/Vt/Ns/n) - Rs/Rp - 1
-    root = approximate_root(f, f_prime, Isc_ref)
-    current.append(root)
+IV = generate_iv(Imp_ref, Vmp_ref, Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
+voltage = IV[0]
+current = IV[1]
 
 
 #Simulation results
