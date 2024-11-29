@@ -46,7 +46,7 @@ Io = Isc_ref/(exp(Voc/(n*Ns*Vt)) - 1)    #Saturation current at T (A)
 Rp, Rs = inf, 0    #Series and shunt resistance
 
 
-voltage = [i for i in arange(0, Voc, 0.1)].append(Voc)    
+voltage = [i for i in arange(0, Voc + 1, 0.1)]
 current = []
 
 
