@@ -20,14 +20,18 @@ Ki = float(input("Temperature coefficient of Isc (%/°C) = "))
 
 Kv = float(input("Temperature coefficient of Voc (%/°C) = "))
 
+Tn = float(input("NOCT (°C) = "))
+
 n = float(input("Ideality factor of the junction = "))
 
 Ns = float(input("Number of cells connected in series = "))
 
-T = float(input("Panel temperature (°C) = ")) + 273.15
+T = float(input("Ambiant temperature (°C) = ")) + 273.15
 
 G = float(input("Solar irradiation (W/m²) = "))
 
+
+T = (Tn - 20)*G/800 + T    #Module temperature (°C)
 
 Pmax_ref = Imp_ref * Vmp_ref    #Maximum power at STC (W)
 
@@ -39,16 +43,7 @@ Voc = Voc_ref + Kv*(T - T_REF)    #Open circuit voltage at T (V)
 
 Io = Isc_ref/(exp(Voc/(n*Ns*Vt)) - 1)    #Saturation current at T (A)
 
-#Series and shunt resistances
-if (Pmax_ref > 0)  and (Pmax_ref < 211.572):
-    R = estimate_resistance(Voc, Isc_ref, Iph, Imp_ref, Vmp_ref, Io, Vt, Ns, n)
-    Rp, Rs = R[0], R[1] 
-
-elif Pmax_ref >= 211.572:
-    Rp, Rs = inf, 0
-
-else:
-    raise ValueError("Pmax cannot be less than or equal to zero, please verify the entered parameters")
+Rp, Rs = inf, 0    #Series and shunt resistance
 
 
 voltage = [i for i in arange(0, Voc, 0.1)]    
