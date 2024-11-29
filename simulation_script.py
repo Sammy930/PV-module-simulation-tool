@@ -22,13 +22,19 @@ n = float(input("\nIdeality factor of the junction = "))
 
 Ns = float(input("\nNumber of cells connected in series = "))
 
-T = float(input("\nAmbiant temperature (°C) = ")) + 273.15
+if UNITS["temperature"] == "celcius":
+    T = float(input("\nAmbiant temperature (°C) = ")) + 273.15
+elif UNITS["temperature"] == "fahrenheit":
+    T = (float(input("\nAmbiant temperature (°F) = ")) - 32)*(5/9) + 273.15
 
 G = float(input("\nSolar irradiation (W/m²) = "))
 
-length = input("\nPanel length (optional) (cm) = ")
-
-width = input("\nPanel width (optional) (cm) = ")
+if UNITS["length"] == "mm":
+    length = input("\nPanel length (optional) (mm) = ")
+    width = input("\nPanel width (optional) (mm) = ")
+elif UNITS["length"] == "in":
+        length = input("\nPanel length (optional) (in) = ")
+        width = input("\nPanel width (optional) (in) = ")   
 
 T = (Tn - 20)*G/800 + T    #Module temperature (°C)
 
@@ -50,9 +56,14 @@ print("\n-----------------------------------RESULTS-----------------------------
 print(f"The maximum power yielded by the module is: {ceil((Pmax*100))/100} Watt")
 print(f"The max power point is estimated at I = {ceil((Imp*100))/100} Amps and  V = {ceil((Vmp*100))/100} Volts")
 print(f"Fill Factor = {ceil((fill_factor*100))/100}")
+
 if is_float_regex(length) and is_float_regex(width):
-    A = float(length)*float(width)*1e-4
-    efficiency = (Pmax/(G*A))*100
+    if UNITS["length"] == "mm":
+        A = float(length)*float(width)*1e-6
+    elif UNITS["length"] == "in":
+         A = (float(length)*float(width))/1550
+            
+    efficiency = (Pmax/(G*A))*100     
     print(f"Efficiency = {ceil((efficiency*100))/100} %")
 
 

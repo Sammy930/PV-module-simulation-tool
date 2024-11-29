@@ -5,6 +5,11 @@ FONT = {
     'size':'10'
 }
 
+UNITS = {
+    'temperature' : 'celcius',    #[celcius/fahrenheit]
+    'length': 'mm'    #[mm/in]
+}
+
 K = 1.3806503e-23   #Boltzmann constant (J/K)
 
 Q = 1.60217646e-19  #Electron charge (C)
