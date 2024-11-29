@@ -74,8 +74,8 @@ print(f"Fill Factor = {ceil((fill_factor*100))/100}")
 
 #Results visualization
 
-fig = plt.figure()
-fig.suptitle("SOLAR PANEL CHARACTERISTIC CURVES", weight="bold", color="#060621", size="14")
+fig = plt.figure(num="IV/PV Plot")
+fig.suptitle("SOLAR MODULE CHARACTERISTIC CURVES", weight="bold", color="#060621", size="14")
 fig.set_size_inches(8, 6.75)
 fig.patch.set_facecolor("#cacfe6")
 
