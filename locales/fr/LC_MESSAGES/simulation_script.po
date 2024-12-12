@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-12 18:57+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: simulation_script.py:21
+msgid "Short circuit current at STC (A) = "
+msgstr "Courant de court-circuit sous STC (A) = "
+
+#: simulation_script.py:23
+msgid "Open circuit voltage at STC (V) = "
+msgstr "Tension de circuit ouvert sous STC (V) = "
+
+#: simulation_script.py:25
+msgid "Temperature coefficient of Isc (%/°C) = "
+msgstr "Coéfficient de température de Isc (%/°C) = "
+
+#: simulation_script.py:27
+msgid "Temperature coefficient of Voc (%/°C) = "
+msgstr "Coéfficient de température de Voc (%/°C) = "
+
+#: simulation_script.py:31
+msgid "Ideality factor of the junction = "
+msgstr "Facteur d'idéalité de la jonction = "
+
+#: simulation_script.py:33
+msgid "Number of cells connected in series = "
+msgstr "Nombre de cellules connectées en série = "
+
+#: simulation_script.py:37
+msgid "Ambiant temperature (°C) = "
+msgstr "Température ambiante (°C) = "
+
+#: simulation_script.py:39
+msgid "Ambiant temperature (°F) = "
+msgstr "Température ambiante (°F) = "
+
+#: simulation_script.py:41
+msgid "Solar irradiation (W/m²) = "
+msgstr "Irradiation solaire (W/m²) = "
+
+#: simulation_script.py:45
+msgid "Panel length (optional) (mm) = "
+msgstr "Longueur du panneau (facultatif) (mm) = "
+
+#: simulation_script.py:46
+msgid "Panel width (optional) (mm) = "
+msgstr "Largeur du panneau (facultatif) (mm) = "
+
+#: simulation_script.py:48
+msgid "Panel length (optional) (in) = "
+msgstr "Longueur du panneau (facultatif) (in) = "
+
+#: simulation_script.py:49
+msgid "Panel width (optional) (in) = "
+msgstr "Largeur du panneau (facultatif) (in) = "
+
+#: simulation_script.py:67
+msgid "-----------------------------------RESULTS-----------------------------------"
+msgstr "-----------------------------------RÉSULTATS-----------------------------------"
+
+#: simulation_script.py:68
+#, python-brace-format
+msgid "The maximum power yielded by the module is: {0} Watt"
+msgstr "La puissance maximale fournie par le module est de : {0} Watt"
+
+#: simulation_script.py:69
+#, python-brace-format
+msgid "The max power point is estimated at I = {0} Amps and  V = {1} Volts"
+msgstr "Le point de puissance maximale est estimé à I = {0} Ampères et V = {1} Volts"
+
+#: simulation_script.py:70
+#, python-brace-format
+msgid "Fill Factor = {0}"
+msgstr "Facteur de Forme = {0}"
+
+#: simulation_script.py:79
+#, python-brace-format
+msgid "Efficiency = {0} %"
+msgstr "Rendement = {0} %"
+
+#: simulation_script.py:85
+msgid "SOLAR MODULE CHARACTERISTIC CURVES"
+msgstr "COURBES CARACTÉRISTIQUES DU MODULE"
+
+#: simulation_script.py:97
+msgid "Current"
+msgstr "Courant"
+
+#: simulation_script.py:97
+msgid "(Amp)"
+msgstr "(A)"
+
+#: simulation_script.py:102
+msgid "Max power point"
+msgstr "Point de puissance max"
+
+#: simulation_script.py:104
+msgid "Voltage (Volt)"
+msgstr "Tension (Volt)"
+
+#: simulation_script.py:105
+msgid "Power"
+msgstr "Puissance"

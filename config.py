@@ -5,6 +5,8 @@ FONT = {
     'size':'10'
 }
 
+LANG = 'en'    #[en/fr]
+
 UNITS = {
     'temperature':'celcius',    #[celcius/fahrenheit]
     'length':'mm'    #[mm/in]

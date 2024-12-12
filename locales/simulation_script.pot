@@ -1,0 +1,122 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-12 18:57+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: simulation_script.py:21
+msgid "Short circuit current at STC (A) = "
+msgstr ""
+
+#: simulation_script.py:23
+msgid "Open circuit voltage at STC (V) = "
+msgstr ""
+
+#: simulation_script.py:25
+msgid "Temperature coefficient of Isc (%/°C) = "
+msgstr ""
+
+#: simulation_script.py:27
+msgid "Temperature coefficient of Voc (%/°C) = "
+msgstr ""
+
+#: simulation_script.py:29
+msgid "NOCT (°C) = "
+msgstr ""
+
+#: simulation_script.py:31
+msgid "Ideality factor of the junction = "
+msgstr ""
+
+#: simulation_script.py:33
+msgid "Number of cells connected in series = "
+msgstr ""
+
+#: simulation_script.py:37
+msgid "Ambiant temperature (°C) = "
+msgstr ""
+
+#: simulation_script.py:39
+msgid "Ambiant temperature (°F) = "
+msgstr ""
+
+#: simulation_script.py:41
+msgid "Solar irradiation (W/m²) = "
+msgstr ""
+
+#: simulation_script.py:45
+msgid "Panel length (optional) (mm) = "
+msgstr ""
+
+#: simulation_script.py:46
+msgid "Panel width (optional) (mm) = "
+msgstr ""
+
+#: simulation_script.py:48
+msgid "Panel length (optional) (in) = "
+msgstr ""
+
+#: simulation_script.py:49
+msgid "Panel width (optional) (in) = "
+msgstr ""
+
+#: simulation_script.py:67
+msgid "-----------------------------------RESULTS-----------------------------------"
+msgstr ""
+
+#: simulation_script.py:68
+#, python-brace-format
+msgid "The maximum power yielded by the module is: {0} Watt"
+msgstr ""
+
+#: simulation_script.py:69
+#, python-brace-format
+msgid "The max power point is estimated at I = {0} Amps and  V = {1} Volts"
+msgstr ""
+
+#: simulation_script.py:70
+#, python-brace-format
+msgid "Fill Factor = {0}"
+msgstr ""
+
+#: simulation_script.py:79
+#, python-brace-format
+msgid "Efficiency = {0} %"
+msgstr ""
+
+#: simulation_script.py:85
+msgid "SOLAR MODULE CHARACTERISTIC CURVES"
+msgstr ""
+
+#: simulation_script.py:97
+msgid "Current"
+msgstr ""
+
+#: simulation_script.py:97
+msgid "(Amp)"
+msgstr ""
+
+#: simulation_script.py:102
+msgid "Max power point"
+msgstr ""
+
+#: simulation_script.py:104
+msgid "Voltage (Volt)"
+msgstr ""
+
+#: simulation_script.py:105
+msgid "Power"
+msgstr ""
