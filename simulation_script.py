@@ -32,9 +32,11 @@ Ns = float(input("\n" + _("Number of cells connected in series = ")))
 
 match UNITS['temperature']:
     case 'celcius': 
-        T = float(input("\n" + _("Ambiant temperature (°C) = "))) + 273.15
+        Ta = float(input("\n" + _("Ambiant temperature (°C) = ")))
+        T = Ta
     case 'fahrenheit':
-        T = (float(input("\n" + _("Ambiant temperature (°F) = "))) - 32)*(5/9) + 273.15
+        Ta = float(input("\n" + _("Ambiant temperature (°F) = ")))
+        T = (Ta - 32)*(5/9)
 
 G = float(input("\n" + _("Solar irradiation (W/m²) = ")))
 
@@ -46,7 +48,7 @@ match UNITS['length']:
         length = input("\n" + _("Panel length (optional) (in) = "))
         width = input("\n" + _("Panel width (optional) (in) = "))  
 
-T = (Tn - 20)*G/800 + T    #Module temperature (°C)
+T = (Tn - 20)*G/800 + T + 273.15   #Module temperature (°C)
 
 
 IV = generate_iv(Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
@@ -80,28 +82,48 @@ if is_float_regex(length) and is_float_regex(width):
 #Results visualization
 
 fig = plt.figure(num="IV/PV Plot")
-fig.suptitle(_("SOLAR MODULE CHARACTERISTIC CURVES"), weight="bold", color="#060621", size="14")
-fig.set_size_inches(8, 6.75)
-fig.patch.set_facecolor("#cacfe6")
+fig.suptitle(_("SOLAR MODULE CHARACTERISTIC CURVES"), fontname=FONT['family'], weight=FONT['weight'], color=FONT['color'], size="18")
+fig.text(
+    0.015, 0.90,
+    (f"Temperature: {format(Ta, ".4g")} (°C)" if UNITS['temperature'] == 'celcius' else f"Temperature: {format(Ta, ".4g")} (°F)") + f"  |  Irradiation: {format(G, ".4g")} (W/m²)",
+    color=FONT['color'], fontsize=10,
+)
+fig.set_size_inches(9, 9)
+fig.patch.set_facecolor("#ffffff")
 
 IV = plt.subplot(211)
 PV = plt.subplot(212, sharex=IV)
 plt.subplots_adjust(hspace=0)
 
-IV.plot(voltage, current, "b", linewidth=2, label="I = f(V)")
+IV.spines["left"].set_color("none")
+IV.spines["right"].set_color("none")
+IV.spines["top"].set_color("none")
+IV.tick_params(axis='y', colors=FONT['color'])
+
+IV.plot(voltage, current, "#7a76c2", linewidth=2, label="I = f(V)")
 IV.set_xlim(0)
 IV.set_ylim(0, 1.12*max(current))
 plt.setp(IV.get_xticklabels(), visible=False)
 IV.set_ylabel(_("Current") + "\n" + _("(Amp)"), fontdict=FONT, rotation=0, loc="center", labelpad=32)
 IV.legend(loc="upper right")
-IV.grid()
+IV.grid(c='#ffffff')
+IV.set_facecolor('#eaeaf2')
 
-PV.plot(voltage, power, "r", linewidth=2, label="P = f(V)")
-PV.plot(Vmp, Pmax, "b", marker="o", label=_("Max power point"))    #highlight max power point
+PV.spines["left"].set_color("none")
+PV.spines["right"].set_color("none")
+PV.spines["top"].set_color("none")
+PV.spines['bottom'].set_color(FONT['color'])
+PV.tick_params(axis='x', colors=FONT['color'])
+PV.tick_params(axis='y', colors=FONT['color'])
+PV.xaxis.label.set_color(FONT['color'])
+
+PV.plot(voltage, power, "#f62196", linewidth=2, label="P = f(V)")
+PV.plot(Vmp, Pmax, "#f6a0be", marker="o", label=_("Max power point"))    #highlight max power point
 PV.set_ylim(0, 1.12*max(power))
 PV.set_xlabel(_("Voltage (Volt)"), fontdict=FONT)
-PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=20)
+PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
 PV.legend(loc="upper left")
-PV.grid()
+PV.grid(c='#ffffff')
+PV.set_facecolor('#eaeaf2')
 
 plt.show()
