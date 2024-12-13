@@ -119,7 +119,7 @@ PV.xaxis.label.set_color(FONT['color'])
 
 PV.plot(voltage, power, "#f62196", linewidth=2, label="P = f(V)")
 PV.plot(Vmp, Pmax, "#f6a0be", marker="o", label=_("Max power point"))    #highlight max power point
-PV.set_ylim(0, 1.12*max(power))
+PV.set_ylim(0, 1.2*max(power))
 PV.set_xlabel(_("Voltage (Volt)"), fontdict=FONT)
 PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
 PV.legend(loc="upper left")
