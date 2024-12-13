@@ -1,4 +1,4 @@
-![Static Badge](https://img.shields.io/badge/Lang-en-red?link=https%3A%2F%2Fgithub.com%2FSammy930%2FPV-module-simulation-tool%2Fblob%2Fmain%2FREADME.md)
+[![Static Badge](https://img.shields.io/badge/Lang-en-red?style=flat)](https://github.com/Sammy930/PV-module-simulation-tool/blob/main/README.md)
 ## Description:
 This project consists of a simulation tool implemented as a Python script which yields the electrical characteristics of photovoltaic panels of different types depending on various environmental factors
 
