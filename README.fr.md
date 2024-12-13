@@ -18,7 +18,7 @@ Il suffit de télécharger le code source et d'exécuter simulation_script.py
 
 ## Références:
 [1] F. Adamo, F. Attivissimo, A. Di Nisio, A. M. L. Lanzolla, and M. Spadavecchia, “Parameters estimation for a model of photovoltaic
-panels,” 19th IMEKO World Congr. 2009, vol. 4, pp. 2452–2455, 2009.<br/>
+panels” 19th IMEKO World Congr. 2009, vol. 4, pp. 2452–2455, 2009.<br/>
 [2] (s.d.). Modeling and Simulation of photovoltaic Module using MATLAB/SIMULINK. EDP
 SCIENCE.<br/>
 [3] (s.d.). solar photovoltaic technology basics. Récupéré sur www.energy.gov:
