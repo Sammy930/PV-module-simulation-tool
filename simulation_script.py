@@ -21,8 +21,10 @@ Isc_ref = float(input(_("Short circuit current at STC (A) = ")))
 Voc_ref = float(input("\n" + _("Open circuit voltage at STC (V) = ")))
 
 Ki = float(input("\n" + _("Temperature coefficient of Isc (%/°C) = ")))
+Ki = (Ki*Isc_ref)/100
 
 Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
+Kv = (Kv*Voc_ref)/100
 
 Tn = float(input("\nNOCT (°C) = "))
 
