@@ -45,7 +45,7 @@ def generate_iv(
     
     Rp, Rs = np.inf, 0    #Series and shunt resistance
 
-    voltage = [i for i in np.arange(0, Voc + 1, 0.1)]
+    voltage = [i for i in np.linspace(0, Voc, 2000)]
     current = []
 
     #Approximate I for each value of V
