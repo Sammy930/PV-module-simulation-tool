@@ -93,7 +93,7 @@ Rs = X[3]
 Rsh = X[4]*(G_REF/G)
 
 
-IV = generate_iv(Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
+IV = generate_iv(Isc_ref, Voc_ref, Iph, Io, Kv, a, T, Rs, Rsh)
 voltage = IV[0]
 current = IV[1]
 power = np.multiply(current, voltage)
