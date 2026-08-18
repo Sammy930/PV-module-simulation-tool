@@ -52,6 +52,28 @@ match UNITS['length']:
         length = input("\n" + _("Panel length (optional) (in) = "))
         width = input("\n" + _("Panel width (optional) (in) = "))  
 
+#Extract reference params
+
+def equations(vars):
+    Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref = vars
+
+    E = np.exp((Vmp_ref + Imp_ref*Rs_ref)/a_ref)    #Extracted expression for readability
+
+    #Open circuit conditions evaluated at T_2
+    Eg_2 = Eg_REF*(1 - 0.0002677*(T_2 - T_REF))
+    Iph_2 = Iph_ref + Ki*(T_2 - T_REF)
+    Io_2 = Io_ref*((T_2/T_REF)**3)*np.exp((Eg_REF/(K*T_REF)) - (Eg_2/(K*T_2)))
+    Voc_2 = Voc_ref + Kv*(T_2 - T_REF)
+    a_2 = a_ref*(T_2/T_REF)
+
+    #De Soto equations
+    eq1 = (Iph_ref - Io_ref*(np.exp((Isc_ref*Rs_ref)/a_ref) - 1) - Isc_ref*(1 + (Rs_ref/Rsh_ref)))/Isc_ref
+    eq2 = (Iph_ref - Io_ref*(np.exp(Voc_ref/a_ref) - 1) - Voc_ref/Rsh_ref)/Voc_ref
+    eq3 = (Iph_ref - Io_ref*(E - 1) - (Vmp_ref + Imp_ref*(Rs_ref + Rsh_ref))/Rsh_ref)/Imp_ref
+    eq4 = (Imp_ref/Vmp_ref - ((Io_ref/a_ref*E + 1/Rsh_ref)/(1 + (Io_ref*Rs_ref/a_ref)*E + Rs_ref/Rsh_ref)))*(Vmp_ref/Imp_ref)
+    eq5 = (Iph_2 - Io_2*(np.exp(Voc_2/a_2) - 1) - Voc_2/Rsh_ref)/Isc_ref
+    
+    return [eq1, eq2, eq3, eq4, eq5]
 
 IV = generate_iv(Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
 voltage = IV[0]
