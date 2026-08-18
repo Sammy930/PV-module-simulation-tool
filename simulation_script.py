@@ -30,19 +30,17 @@ Ki = (Ki*Isc_ref)/100
 Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
 Kv = (Kv*Voc_ref)/100
 
-Tn = float(input("\nNOCT (°C) = "))
-
 n = float(input("\n" + _("Ideality factor of the junction = ")))
 
 Ns = float(input("\n" + _("Number of cells connected in series = ")))
 
 match UNITS['temperature']:
     case 'celcius': 
-        Ta = float(input("\n" + _("Ambiant temperature (°C) = ")))
-        T = Ta
+        Ta = float(input("\n" + _("Cell temperature (°C) = ")))
+        T = Ta + 273.15
     case 'fahrenheit':
-        Ta = float(input("\n" + _("Ambiant temperature (°F) = ")))
-        T = (Ta - 32)*(5/9)
+        Ta = float(input("\n" + _("Cell temperature (°F) = ")))
+        T = (Ta - 32)*(5/9) + 273.15
 
 G = float(input("\n" + _("Solar irradiation (W/m²) = ")))
 
@@ -53,8 +51,6 @@ match UNITS['length']:
     case 'in':
         length = input("\n" + _("Panel length (optional) (in) = "))
         width = input("\n" + _("Panel width (optional) (in) = "))  
-
-T = (Tn - 20)*G/800 + T + 273.15   #Module temperature (°C)
 
 
 IV = generate_iv(Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
