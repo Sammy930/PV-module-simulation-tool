@@ -53,6 +53,7 @@ match UNITS['length']:
         length = input("\n" + _("Panel length (optional) (in) = "))
         width = input("\n" + _("Panel width (optional) (in) = "))  
 
+
 #Extract reference params
 
 def equations(vars):
@@ -80,6 +81,17 @@ a_guess = (Vmp_ref - Voc_ref)/(np.log(1 - Imp_ref/Isc_ref))
 initial_guesses = [Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0, np.inf] 
 
 X = fsolve(equations, initial_guesses)
+
+
+#Params translated to (T,G)
+
+Iph = (G/G_REF)*(X[0] + Ki*(T - T_REF))
+Eg = Eg_REF*(1 - 0.0002677*(T - T_REF))
+Io = X[1]*((T/T_REF)**3)*np.exp((Eg_REF/(K*T_REF)) - (Eg/(K*T)))
+a = X[2]*(T/T_REF)
+Rs = X[3]
+Rsh = X[4]*(G_REF/G)
+
 
 IV = generate_iv(Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
 voltage = IV[0]
