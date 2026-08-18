@@ -31,10 +31,6 @@ Ki = (Ki*Isc_ref)/100
 Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
 Kv = (Kv*Voc_ref)/100
 
-n = float(input("\n" + _("Ideality factor of the junction = ")))
-
-Ns = float(input("\n" + _("Number of cells connected in series = ")))
-
 match UNITS['temperature']:
     case 'celcius': 
         Ta = float(input("\n" + _("Cell temperature (°C) = ")))
