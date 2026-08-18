@@ -25,9 +25,17 @@ msgstr "Courant de court-circuit sous STC (A) = "
 msgid "Open circuit voltage at STC (V) = "
 msgstr "Tension de circuit ouvert sous STC (V) = "
 
+#: simulation_script.py:24
+msgid "Max power current at STC (A) = "
+msgstr "Courant à puissance maximale sous STC (A) = "
+
 #: simulation_script.py:25
 msgid "Temperature coefficient of Isc (%/°C) = "
 msgstr "Coéfficient de température de Isc (%/°C) = "
+
+#: simulation_script.py:26
+msgid "Max power voltage at STC (V) = "
+msgstr "Tension à puissance maximale sous STC (V) = "
 
 #: simulation_script.py:27
 msgid "Temperature coefficient of Voc (%/°C) = "
@@ -49,9 +57,17 @@ msgstr "Température ambiante (°C) = "
 msgid "Ambiant temperature (°F) = "
 msgstr "Température ambiante (°F) = "
 
+#: simulation_script.py:40
+msgid "Cell temperature (°C) = "
+msgstr "Température de la cellule (°C) = "
+
 #: simulation_script.py:41
 msgid "Solar irradiation (W/m²) = "
 msgstr "Irradiation solaire (W/m²) = "
+
+#: simulation_script.py:43
+msgid "Cell temperature (°F) = "
+msgstr "Température de la cellule (°F) = "
 
 #: simulation_script.py:45
 msgid "Panel length (optional) (mm) = "
