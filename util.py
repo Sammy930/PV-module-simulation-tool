@@ -26,24 +26,17 @@ def approximate_root(
 def generate_iv(
         Isc_ref: float,
         Voc_ref: float,
-        Ki: float,
+        Iph: float,
+        Io: float,
         Kv: float,
-        n: float,
-        Ns: float,
+        a: float,
         T: float,
-        G: float) -> tuple:
+        Rs: float,
+        Rsh: float) -> tuple:
     """Calculates the output current for each value in the voltage array from 0 to Voc
     by solving I = f(V) using the Newton-Raphson approximation algorithm"""
 
-    Vt = (K*T)/Q    #Thermal voltage at T (V)
-
-    Iph = Isc_ref*(G/G_REF) + Ki*(T - T_REF)    #Photocurrent (A)
-
     Voc = Voc_ref + Kv*(T - T_REF)    #Open circuit voltage at T (V)
-
-    Io = Isc_ref/(np.exp(Voc/(n*Ns*Vt)) - 1)    #Saturation current at STC (A)
-    
-    Rp, Rs = np.inf, 0    #Series and shunt resistance
 
     voltage = [i for i in np.linspace(0, Voc, 2000)]
     current = []
@@ -51,8 +44,8 @@ def generate_iv(
     #Approximate I for each value of V
 
     for i in range(0, len(voltage)):
-        f = lambda I : Iph - Io*(np.exp((voltage[i] + I*Rs)/Vt/Ns/n) - 1) - (voltage[i] + I*Rs)/Rp - I
-        f_prime = lambda I : -Io*Rs/Vt/Ns/n*np.exp((voltage[i] + I*Rs)/Vt/Ns/n) - Rs/Rp - 1
+        f = lambda I : Iph - Io*(np.exp((voltage[i] + I*Rs)/a) - 1) - (voltage[i] + I*Rs)/Rsh - I
+        f_prime = lambda I : -Io*Rs/a*np.exp((voltage[i] + I*Rs)/a) - Rs/Rsh - 1
         root = approximate_root(f, f_prime, Isc_ref)
         current.append(root)
 
