@@ -3,6 +3,7 @@ from math import ceil
 from config import *
 from util import generate_iv, is_float_regex
 import numpy as np
+from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
 
 
@@ -74,6 +75,11 @@ def equations(vars):
     eq5 = (Iph_2 - Io_2*(np.exp(Voc_2/a_2) - 1) - Voc_2/Rsh_ref)/Isc_ref
     
     return [eq1, eq2, eq3, eq4, eq5]
+
+a_guess = (Vmp_ref - Voc_ref)/(np.log(1 - Imp_ref/Isc_ref))
+initial_guesses = [Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0, np.inf] 
+
+X = fsolve(equations, initial_guesses)
 
 IV = generate_iv(Isc_ref, Voc_ref, Ki, Kv, n, Ns, T, G)
 voltage = IV[0]
