@@ -53,6 +53,9 @@ match UNITS['length']:
 #Extract reference params
 
 def equations(vars):
+    """Uses datasheet values to define the five equations of the De Soto model 
+    and their respective variables."""
+    
     Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref = vars
 
     E = np.exp((Vmp_ref + Imp_ref*Rs_ref)/a_ref)    #Extracted expression for readability
