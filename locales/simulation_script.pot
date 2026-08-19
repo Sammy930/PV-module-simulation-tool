@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 17:48+0100\n"
+"POT-Creation-Date: 2026-08-19 17:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,87 +41,79 @@ msgstr ""
 msgid "Temperature coefficient of Voc (%/°C) = "
 msgstr ""
 
-#: simulation_script.py:34
-msgid "Ideality factor of the junction = "
-msgstr ""
-
 #: simulation_script.py:36
-msgid "Number of cells connected in series = "
-msgstr ""
-
-#: simulation_script.py:40
 msgid "Cell temperature (°C) = "
 msgstr ""
 
-#: simulation_script.py:43
+#: simulation_script.py:39
 msgid "Cell temperature (°F) = "
 msgstr ""
 
-#: simulation_script.py:46
+#: simulation_script.py:42
 msgid "Solar irradiation (W/m²) = "
 msgstr ""
 
-#: simulation_script.py:50
+#: simulation_script.py:46
 msgid "Panel length (optional) (mm) = "
 msgstr ""
 
-#: simulation_script.py:51
+#: simulation_script.py:47
 msgid "Panel width (optional) (mm) = "
 msgstr ""
 
-#: simulation_script.py:53
+#: simulation_script.py:49
 msgid "Panel length (optional) (in) = "
 msgstr ""
 
-#: simulation_script.py:54
+#: simulation_script.py:50
 msgid "Panel width (optional) (in) = "
 msgstr ""
 
-#: simulation_script.py:109
+#: simulation_script.py:108
 msgid ""
 "-----------------------------------RESULTS-----------------------------------"
 msgstr ""
 
-#: simulation_script.py:110
+#: simulation_script.py:109
 #, python-brace-format
 msgid "The maximum power yielded by the module is: {0} Watt"
 msgstr ""
 
-#: simulation_script.py:111
+#: simulation_script.py:110
 #, python-brace-format
 msgid "The max power point is estimated at I = {0} Amps and  V = {1} Volts"
 msgstr ""
 
-#: simulation_script.py:112
+#: simulation_script.py:111
 #, python-brace-format
 msgid "Fill Factor = {0}"
 msgstr ""
 
-#: simulation_script.py:121
+#: simulation_script.py:120
 #, python-brace-format
 msgid "Efficiency = {0} %"
 msgstr ""
 
-#: simulation_script.py:127
+#: simulation_script.py:126
 msgid "SOLAR MODULE CHARACTERISTIC CURVES"
 msgstr ""
 
-#: simulation_script.py:149
+#: simulation_script.py:148
 msgid "Current"
 msgstr ""
 
-#: simulation_script.py:149
+#: simulation_script.py:148
 msgid "(Amp)"
 msgstr ""
 
-#: simulation_script.py:163
+#: simulation_script.py:162
 msgid "Max power point"
 msgstr ""
 
-#: simulation_script.py:165
+#: simulation_script.py:164
 msgid "Voltage (Volt)"
 msgstr ""
 
-#: simulation_script.py:166
+#: simulation_script.py:165
 msgid "Power"
 msgstr ""
