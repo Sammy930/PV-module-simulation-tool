@@ -12,7 +12,7 @@ UNITS = {
     'length':'mm'    #[mm/in]
 }
 
-TEMP_SETTING = 'Ambient' #[Ambient/Cell]
+TEMP_SETTING = 'Cell' #[Ambient/Cell]
 
 K = 1.3806503e-23   #Boltzmann constant (J/K)
 

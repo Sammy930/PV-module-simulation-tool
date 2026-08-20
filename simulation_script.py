@@ -31,15 +31,19 @@ Ki = (Ki*Isc_ref)/100
 Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
 Kv = (Kv*Voc_ref)/100
 
-match UNITS['temperature']:
-    case 'C': 
-        Ta = float(input("\n" + _("Cell temperature (°C) = ")))
-        T = Ta + 273.15
-    case 'F':
-        Ta = float(input("\n" + _("Cell temperature (°F) = ")))
-        T = (Ta - 32)*(5/9) + 273.15
-
 G = float(input("\n" + _("Solar irradiation (W/m²) = ")))
+
+NOCT = float(input("\nNOCT (°C) = "))
+
+match TEMP_SETTING:
+    case 'Ambient': 
+        Ta = float(input("\n" + _("Ambient temperature (°{}) = ").format(UNITS['temperature'])))
+        T = (Ta - 32)*(5/9) if UNITS['temperature'] == 'F' else Ta
+        T = (NOCT - 20)*G/800 + T + 273.15
+        Ta = T - 273.15 if UNITS["temperature"] == 'C' else (T - 273.15)*(9/5) + 32
+    case 'Cell':
+        Ta = float(input("\n" + _("Cell temperature (°{}) = ").format(UNITS['temperature'])))
+        T = (Ta - 32)*(5/9) + 273.15 if UNITS['temperature'] == 'F' else Ta + 273.15
 
 match UNITS['length']:
     case 'mm':
@@ -126,7 +130,7 @@ fig = plt.figure(num="IV/PV Plot")
 fig.suptitle(_("SOLAR MODULE CHARACTERISTIC CURVES"), fontname=FONT['family'], weight=FONT['weight'], color=FONT['color'], size="18")
 fig.text(
     0.015, 0.90,
-    (f"Temperature: {format(Ta, ".4g")} (°C)" if UNITS['temperature'] == 'celcius' else f"Temperature: {format(Ta, ".4g")} (°F)") + f"  |  Irradiation: {format(G, ".4g")} (W/m²)",
+    (f"Temperature: {format(Ta, ".4g")} (°C)" if UNITS['temperature'] == 'C' else f"Temperature: {format(Ta, ".4g")} (°F)") + f"  |  Irradiation: {format(G, ".4g")} (W/m²)",
     color=FONT['color'], fontsize=10,
 )
 fig.set_size_inches(9, 9)
