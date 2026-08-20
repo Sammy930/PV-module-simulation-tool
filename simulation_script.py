@@ -32,10 +32,10 @@ Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
 Kv = (Kv*Voc_ref)/100
 
 match UNITS['temperature']:
-    case 'celcius': 
+    case 'C': 
         Ta = float(input("\n" + _("Cell temperature (°C) = ")))
         T = Ta + 273.15
-    case 'fahrenheit':
+    case 'F':
         Ta = float(input("\n" + _("Cell temperature (°F) = ")))
         T = (Ta - 32)*(5/9) + 273.15
 

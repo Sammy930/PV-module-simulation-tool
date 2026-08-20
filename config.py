@@ -8,9 +8,11 @@ FONT = {
 LANG = 'en'    #[en/fr]
 
 UNITS = {
-    'temperature':'celcius',    #[celcius/fahrenheit]
+    'temperature':'C',    #[C/F]
     'length':'mm'    #[mm/in]
 }
+
+TEMP_SETTING = 'Ambient' #[Ambient/Cell]
 
 K = 1.3806503e-23   #Boltzmann constant (J/K)
 
