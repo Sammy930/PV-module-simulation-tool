@@ -5,7 +5,7 @@ FONT = {
     'size':'10'
 }
 
-LANG = 'fr'    #[en/fr]
+LANG = 'en'    #[en/fr]
 
 UNITS = {
     'temperature':'C',    #[C/F]
