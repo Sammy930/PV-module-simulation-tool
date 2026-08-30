@@ -18,7 +18,7 @@ Just download the source code and run simulation_script.py
   - [Matplotlib](https://matplotlib.org/) for data visualization.
 
 ## References and further reading:
-[1] De Soto, W., Klein, S.A., & Beckman, W.A. (2006). Improvement and validation of a modelfor photovoltaic array performance. Solar Energy, 80(1), 78–88.</br>
+[1] De Soto, W., Klein, S.A., & Beckman, W.A. (2006). Improvement and validation of a model for photovoltaic array performance. Solar Energy, 80(1), 78–88.</br>
 [2] F. Adamo, F. Attivissimo, A. Di Nisio, A. M. L. Lanzolla, and M. Spadavecchia, “Parameters estimation for a model of photovoltaic
 panels” 19th IMEKO World Congr. 2009, vol. 4, pp. 2452–2455, 2009.<br/>
 [3] (s.d.). Modeling and Simulation of photovoltaic Module using MATLAB/SIMULINK. EDP
