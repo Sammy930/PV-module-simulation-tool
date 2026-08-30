@@ -13,7 +13,7 @@ Finalement, j'ai décidé de réécrire le script Matlab original en Python car 
 Il suffit de télécharger le code source et d'exécuter simulation_script.py
 
 ## Bibliothèques tierces utilisées pour ce projet:
-  - [Numpy](https://numpy.org/) pour les calculs numériques.
+  - [Numpy](https://numpy.org/) et [Scipy](https://scipy.org/) pour les calculs numériques.
   - [Matplotlib](https://matplotlib.org/) pour la visualisation des données.
 
 ## Références:
