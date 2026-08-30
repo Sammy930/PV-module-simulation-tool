@@ -14,7 +14,7 @@ In the end i have decided to rewrite the original Matlab script in Python as it 
 Just download the source code and run simulation_script.py
 
 ## Third party libraries used for this project:
-  - [Numpy](https://numpy.org/) for numerical calculations.
+  - [Numpy](https://numpy.org/) and [Scipy](https://scipy.org/) for numerical calculations.
   - [Matplotlib](https://matplotlib.org/) for data visualization.
 
 ## References and further reading:
