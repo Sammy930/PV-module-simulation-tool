@@ -1,5 +1,6 @@
 import gettext
 from math import ceil
+from itertools import islice
 from config import *
 from util import generate_iv, is_float_regex
 import numpy as np
@@ -15,44 +16,41 @@ _ = fr_i18n.gettext
 
 
 #Module specifications
-#STC = Standard Test Conditions
 
-Isc_ref = float(input(_("Short circuit current at STC (A) = ")))
+Datasheet = {
+            "model_ref" : "DM100 Si-Mono",
+            "Isc_ref" : 5.8,
+            "Voc_ref" : 22.7,
+            "Imp_ref" : 5.45,
+            "Vmp_ref" : 18.35,
+            "Ki" : 0.06,
+            "Kv" : -0.34,
+            "NOCT" : 45,
+            "length" : "",
+            "width": "",
+             }
 
-Voc_ref = float(input("\n" + _("Open circuit voltage at STC (V) = ")))
+Isc_ref, Voc_ref, Imp_ref, Vmp_ref, Ki, Kv, NOCT = map(float, islice(Datasheet.values(), 1, 8))
 
-Imp_ref = float(input("\n" + _("Max power current at STC (A) = ")))
+Ta, G = 25, 1000
 
-Vmp_ref = float(input("\n" + _("Max power voltage at STC (V) = ")))
+length, width = Datasheet["length"], Datasheet["width"]
 
-Ki = float(input("\n" + _("Temperature coefficient of Isc (%/°C) = ")))
+model_ref = Datasheet["model_ref"]
+
+Pmax_ref = Imp_ref*Vmp_ref
+
 Ki = (Ki*Isc_ref)/100
 
-Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
 Kv = (Kv*Voc_ref)/100
-
-G = float(input("\n" + _("Solar irradiation (W/m²) = ")))
-
-NOCT = float(input("\nNOCT (°C) = "))
 
 match TEMP_SETTING:
     case 'Ambient': 
-        Ta = float(input("\n" + _("Ambient temperature (°{}) = ").format(UNITS['temperature'])))
         T = (Ta - 32)*(5/9) if UNITS['temperature'] == 'F' else Ta
         T = (NOCT - 20)*G/800 + T + 273.15
         Ta = T - 273.15 if UNITS["temperature"] == 'C' else (T - 273.15)*(9/5) + 32
     case 'Cell':
-        Ta = float(input("\n" + _("Cell temperature (°{}) = ").format(UNITS['temperature'])))
         T = (Ta - 32)*(5/9) + 273.15 if UNITS['temperature'] == 'F' else Ta + 273.15
-
-match UNITS['length']:
-    case 'mm':
-        length = input("\n" + _("Panel length (optional) (mm) = "))
-        width = input("\n" + _("Panel width (optional) (mm) = "))
-    case 'in':
-        length = input("\n" + _("Panel length (optional) (in) = "))
-        width = input("\n" + _("Panel width (optional) (in) = "))  
-
 
 #Extract reference params
 
@@ -109,7 +107,7 @@ Vmp = voltage[list(power).index(Pmax)]
 Imp = current[list(power).index(Pmax)]
 fill_factor = Pmax/(current[0]*voltage[-1])
 
-print("\n" + _("-----------------------------------RESULTS-----------------------------------") + "\n")
+print("\n" + _(f"-----------------------------------RESULTS FOR {model_ref}-----------------------------------") + "\n")
 print(_("The maximum power yielded by the module is: {0} Watt").format(ceil((Pmax*100))/100))
 print(_("The max power point is estimated at I = {0} Amps and  V = {1} Volts").format(ceil((Imp*100))/100, ceil((Vmp*100))/100))
 print(_("Fill Factor = {0}").format(ceil((fill_factor*100))/100))
@@ -123,6 +121,8 @@ if is_float_regex(length) and is_float_regex(width):
     efficiency = (Pmax/(G*A))*100     
     print(_("Efficiency = {0} %").format(ceil((efficiency*100))/100))
 
+e = abs(Pmax - Pmax_ref)/Pmax_ref*100
+print(f"Accuracy = {ceil(e*100)/100} %")
 
 #Results visualization
 
