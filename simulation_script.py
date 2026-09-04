@@ -40,9 +40,7 @@ with file.open("a", encoding="utf-8") as file:
 
         Pmax_ref = Imp_ref*Vmp_ref      
 
-        Ki = (Ki*Isc_ref)/100       
-
-        Kv = (Kv*Voc_ref)/100       
+        Ki, Kv = (Ki*Isc_ref)/100, (Kv*Voc_ref)/100       
 
         match TEMP_SETTING:
             case 'Ambient': 
