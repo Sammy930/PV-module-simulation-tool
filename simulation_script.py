@@ -110,9 +110,9 @@ Imp = current[list(power).index(Pmax)]
 fill_factor = Pmax/(current[0]*voltage[-1])
 
 print("\n" + _("-----------------------------------RESULTS-----------------------------------") + "\n")
-print(_("The maximum power yielded by the module is: {0} Watt").format(ceil((Pmax*100))/100))
-print(_("The max power point is estimated at I = {0} Amps and  V = {1} Volts").format(ceil((Imp*100))/100, ceil((Vmp*100))/100))
-print(_("Fill Factor = {0}").format(ceil((fill_factor*100))/100))
+print(_("The maximum power yielded by the module is: {0} Watt").format(ceil(Pmax*100)/100))
+print(_("The max power point is estimated at I = {0} Amps and  V = {1} Volts").format(ceil(Imp*100)/100, ceil(Vmp*100)/100))
+print(_("Fill Factor = {0}").format(ceil(fill_factor*100)/100))
 
 if is_float_regex(length) and is_float_regex(width):
     match UNITS['length']:
@@ -121,7 +121,7 @@ if is_float_regex(length) and is_float_regex(width):
         case 'in':
             A = (float(length)*float(width))/1550        
     efficiency = (Pmax/(G*A))*100     
-    print(_("Efficiency = {0} %").format(ceil((efficiency*100))/100))
+    print(_("Efficiency = {0} %").format(ceil(efficiency*100)/100))
 
 
 #Results visualization
