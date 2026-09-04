@@ -108,9 +108,9 @@ with file.open("a", encoding="utf-8") as file:
 
         file.write(
             "\n" + _(f"-----------------------------------RESULTS FOR {model_ref}-----------------------------------") + "\n" +
-            _("The maximum power yielded by the module is: {0} Watt (Pmax_ref = {1})").format(ceil((Pmax*100))/100, ceil(Pmax_ref*100)/100) + "\n" +
-            _("The max power point is estimated at I = {0} Amps and  V = {1} Volts").format(ceil((Imp*100))/100, ceil((Vmp*100))/100) + "\n" +
-            _("Fill Factor = {0}").format(ceil((fill_factor*100))/100) + "\n")
+            _("The maximum power yielded by the module is: {0} Watt (Pmax_ref = {1})").format(ceil(Pmax*100)/100, ceil(Pmax_ref*100)/100) + "\n" +
+            _("The max power point is estimated at I = {0} Amps and  V = {1} Volts").format(ceil(Imp*100)/100, ceil(Vmp*100)/100) + "\n" +
+            _("Fill Factor = {0}").format(ceil(fill_factor*100)/100) + "\n")
 
         if is_float_regex(length) and is_float_regex(width):
             match UNITS['length']:
@@ -119,7 +119,7 @@ with file.open("a", encoding="utf-8") as file:
                 case 'in':
                     A = (float(length)*float(width))/1550
             efficiency = (Pmax/(G*A))*100
-            file.write(_("Efficiency = {0} %").format(ceil((efficiency*100))/100) + "\n")
+            file.write(_("Efficiency = {0} %").format(ceil(efficiency*100)/100) + "\n")
 
         file.write(f"Accuracy = {ceil(e*100)/100} %" + "\n")
 
