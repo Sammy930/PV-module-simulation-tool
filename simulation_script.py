@@ -2,6 +2,7 @@ import gettext
 from math import ceil
 from itertools import islice
 from config import *
+from Datasheets import Data
 from util import generate_iv, is_float_regex
 import numpy as np
 from scipy.optimize import fsolve
@@ -17,18 +18,7 @@ _ = fr_i18n.gettext
 
 #Module specifications
 
-Datasheet = {
-            "model_ref" : "DM100 Si-Mono",
-            "Isc_ref" : 5.8,
-            "Voc_ref" : 22.7,
-            "Imp_ref" : 5.45,
-            "Vmp_ref" : 18.35,
-            "Ki" : 0.06,
-            "Kv" : -0.34,
-            "NOCT" : 45,
-            "length" : "",
-            "width": "",
-             }
+Datasheet = Data[0]
 
 Isc_ref, Voc_ref, Imp_ref, Vmp_ref, Ki, Kv, NOCT = map(float, islice(Datasheet.values(), 1, 8))
 
@@ -106,28 +96,30 @@ Pmax = max(power)
 Vmp = voltage[list(power).index(Pmax)]
 Imp = current[list(power).index(Pmax)]
 fill_factor = Pmax/(current[0]*voltage[-1])
-
-print("\n" + _(f"-----------------------------------RESULTS FOR {model_ref}-----------------------------------") + "\n")
-print(_("The maximum power yielded by the module is: {0} Watt").format(ceil((Pmax*100))/100))
-print(_("The max power point is estimated at I = {0} Amps and  V = {1} Volts").format(ceil((Imp*100))/100, ceil((Vmp*100))/100))
-print(_("Fill Factor = {0}").format(ceil((fill_factor*100))/100))
-
-if is_float_regex(length) and is_float_regex(width):
-    match UNITS['length']:
-        case 'mm':
-            A = float(length)*float(width)*1e-6
-        case 'in':
-            A = (float(length)*float(width))/1550        
-    efficiency = (Pmax/(G*A))*100     
-    print(_("Efficiency = {0} %").format(ceil((efficiency*100))/100))
-
 e = abs(Pmax - Pmax_ref)/Pmax_ref*100
-print(f"Accuracy = {ceil(e*100)/100} %")
+
+with open("result.txt", "a", encoding = "utf-8") as file:
+    file.write("\n" + _(f"-----------------------------------RESULTS FOR {model_ref}-----------------------------------") + "\n")
+    file.write(_("The maximum power yielded by the module is: {0} Watt").format(ceil((Pmax*100))/100) + "\n")
+    file.write(_("The max power point is estimated at I = {0} Amps and  V = {1} Volts").format(ceil((Imp*100))/100, ceil((Vmp*100))/100) + "\n")
+    file.write(_("Fill Factor = {0}").format(ceil((fill_factor*100))/100) + "\n")
+
+    if is_float_regex(length) and is_float_regex(width):
+        match UNITS['length']:
+            case 'mm':
+                A = float(length)*float(width)*1e-6
+            case 'in':
+                A = (float(length)*float(width))/1550        
+        efficiency = (Pmax/(G*A))*100     
+        file.write(_("Efficiency = {0} %").format(ceil((efficiency*100))/100) + "\n")    
+
+    file.write(f"Accuracy = {ceil(e*100)/100} %" + "\n")
+
 
 #Results visualization
 
 fig = plt.figure(num="IV/PV Plot")
-fig.suptitle(_("SOLAR MODULE CHARACTERISTIC CURVES"), fontname=FONT['family'], weight=FONT['weight'], color=FONT['color'], size="18")
+fig.suptitle(_("CHARACTERISTIC CURVES FOR {}").format(model_ref), fontname=FONT['family'], weight=FONT['weight'], color=FONT['color'], size="18")
 fig.text(
     0.015, 0.90,
     (f"Temperature: {format(Ta, ".4g")} (°C)" if UNITS['temperature'] == 'C' else f"Temperature: {format(Ta, ".4g")} (°F)") + f"  |  Irradiation: {format(G, ".4g")} (W/m²)",
@@ -171,4 +163,4 @@ PV.legend(loc="upper left")
 PV.grid(c='#ffffff')
 PV.set_facecolor('#eaeaf2')
 
-plt.show()
+plt.savefig(f"{model_ref}.png", dpi=300, bbox_inches="tight")
