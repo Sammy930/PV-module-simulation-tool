@@ -1,6 +1,7 @@
 #Database of different solar panel datasheet values for testing
 #Units: °C / mm
 #"length" and "width" have to be of str type
+#Please avoid putting slashes in model reference names
 
 Data = [
     {
@@ -76,7 +77,7 @@ Data = [
         "width": "770",
         },
     {
-        "model_ref" : "WS-150 /24V",
+        "model_ref" : "WS-150 24V",
         "Isc_ref" : 4.51,
         "Voc_ref" : 44.30,
         "Imp_ref" : 4.16,
