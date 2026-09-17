@@ -7,7 +7,7 @@ Le script fonctionne en calculant le courant électrique produit par la cellule 
 ## Contexte:
 Ce travail fait partie d'un projet universitaire dont l'objectif était d'étudier le comportement des modules photovoltaïques à travers une approche combinant la simulation numérique et la validation expérimentale. Dans un premier temps, un modèle mathématique à une diode a été programmé et implémenté sous Matlab afin de simuler les caractéristiques électriques I(V) et P(V) de deux technologies de modules PV le Si-monocristallin et le Si-polycristallin et de trouver les paramètres qui caractérisent ces modules. Les simulations ont permis d'analyser l'influence de paramètres clés tels que la température et l'éclairement sur les performances de ces modules. Dans un second temps, une campagne de mesures a été réalisée en conditions extérieures réelles au niveau du laboratoire des énergies renouvelables de la faculté. Les modules mono et polycristallin ont été caractérisés électriquement, avec un suivi précis de la température et de l'éclairement. Les résultats obtenus ont montré un très bon accord entre les caractéristiques I(V) réelles mesurées et celles simulées par le programme développé.
 
-Finalement, j'ai décidé de réécrire le script Matlab original en Python car il s'agit d'un language beaucoup plus pratique et plus accessible.
+Finalement, j'ai décidé de réécrire le programme Matlab en Python.
 
 ## Utilisation:
 Il suffit de télécharger le code source et d'exécuter simulation_script.py
