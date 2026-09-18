@@ -76,11 +76,35 @@ with file.open("a", encoding="utf-8") as file:
 
             return [eq1, eq2, eq3, eq4, eq5]
 
+        def solver_transform(u):
+            """Applies a variable transformation to dynamically scale the variables of 
+            very small (Io_ref) and large (Rsh_ref) values so they all appear to be of the 
+            order of 1 to the fsolve function"""
+
+            u1, u2, u3, u4, u5 = u
+
+            Iph_ref = u1
+            Io_ref = 10**u2     
+            a_ref = u3
+            Rs_ref = u4
+            Rsh_ref = 50/(1.0 - u5)
+
+            return equations([Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref])
+
+
         a_guess = (Vmp_ref - Voc_ref)/(np.log(1 - Imp_ref/Isc_ref))
-        initial_guesses = [Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0, np.inf]
+        initial_guesses = np.array([Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0.01, 50])
 
-        X = fsolve(equations, initial_guesses)
+        u0 = np.zeros(5)
+        u0[0] = initial_guesses[0]
+        u0[1] = np.log10(initial_guesses[1])                        
+        u0[2] = initial_guesses[2]
+        u0[3] = initial_guesses[3]           
+        u0[4] = 0
 
+        X = fsolve(solver_transform, u0)
+
+        X = np.array([X[0], 10**X[1], X[2], X[3], 50/(1.0 - X[4])])
 
         #Params translated to (T,G)
 
