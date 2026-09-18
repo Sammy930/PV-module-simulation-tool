@@ -81,7 +81,7 @@ def equations(vars):
     return [eq1, eq2, eq3, eq4, eq5]
 
 a_guess = (Vmp_ref - Voc_ref)/(np.log(1 - Imp_ref/Isc_ref))
-initial_guesses = np.array([Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0, np.inf])
+initial_guesses = np.array([Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0.01, 50])
 
 X = fsolve(equations, initial_guesses)
 
