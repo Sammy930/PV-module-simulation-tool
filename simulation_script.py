@@ -193,7 +193,7 @@ with file.open("a", encoding="utf-8") as file:
         PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
         PV.legend(loc="upper left")
         PV.grid(c='#ffffff')
-        PV.set_facecolor('#eaeaf2')  #eaeaf2
+        PV.set_facecolor('#eaeaf2')
 
         plt.savefig(f"test_results/{model_ref}.png", dpi=300, bbox_inches="tight")
         plt.close(fig)
