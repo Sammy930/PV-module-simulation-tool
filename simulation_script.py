@@ -187,13 +187,13 @@ with file.open("a", encoding="utf-8") as file:
         PV.xaxis.label.set_color(FONT['color'])
 
         PV.plot(voltage, power, "#44c265", linewidth=2, label="P = f(V)")
-        PV.plot(Vmp, Pmax, "#ff8d41", marker="o", label=_("Max power point"))    #highlight max power point
+        PV.plot(Vmp, Pmax, "#ff6b00", marker="o", label=_("Max power point"))    #highlight max power point
         PV.set_ylim(0, 1.2*max(power))
         PV.set_xlabel(_("Voltage (Volt)"), fontdict=FONT)
         PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
         PV.legend(loc="upper left")
         PV.grid(c='#ffffff')
-        PV.set_facecolor('#eaeaf2')
+        PV.set_facecolor('#eaeaf2')  #eaeaf2
 
         plt.savefig(f"test_results/{model_ref}.png", dpi=300, bbox_inches="tight")
         plt.close(fig)
