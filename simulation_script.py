@@ -164,7 +164,6 @@ with file.open("a", encoding="utf-8") as file:
         PV = plt.subplot(212, sharex=IV)
         plt.subplots_adjust(hspace=0)
 
-        IV.spines["left"].set_color("none")
         IV.spines["right"].set_color("none")
         IV.spines["top"].set_color("none")
         IV.tick_params(axis='y', colors=FONT['color'])
@@ -178,7 +177,6 @@ with file.open("a", encoding="utf-8") as file:
         IV.grid(c='#e0e0e0')
         IV.set_facecolor('#ffffff')
 
-        PV.spines["left"].set_color("none")
         PV.spines["right"].set_color("none")
         PV.spines["top"].set_color("none")
         PV.spines['bottom'].set_color(FONT['color'])
