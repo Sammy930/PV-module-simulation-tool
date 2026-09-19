@@ -169,7 +169,7 @@ with file.open("a", encoding="utf-8") as file:
         IV.spines["top"].set_color("none")
         IV.tick_params(axis='y', colors=FONT['color'])
 
-        IV.plot(voltage, current, "#7a76c2", linewidth=2, label="I = f(V)")
+        IV.plot(voltage, current, "#326ef3", linewidth=2, label="I = f(V)")
         IV.set_xlim(0)
         IV.set_ylim(0, 1.12*max(current))
         plt.setp(IV.get_xticklabels(), visible=False)
@@ -186,8 +186,8 @@ with file.open("a", encoding="utf-8") as file:
         PV.tick_params(axis='y', colors=FONT['color'])
         PV.xaxis.label.set_color(FONT['color'])
 
-        PV.plot(voltage, power, "#f62196", linewidth=2, label="P = f(V)")
-        PV.plot(Vmp, Pmax, "#f6a0be", marker="o", label=_("Max power point"))    #highlight max power point
+        PV.plot(voltage, power, "#44c265", linewidth=2, label="P = f(V)")
+        PV.plot(Vmp, Pmax, "#ff8d41", marker="o", label=_("Max power point"))    #highlight max power point
         PV.set_ylim(0, 1.2*max(power))
         PV.set_xlabel(_("Voltage (Volt)"), fontdict=FONT)
         PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
