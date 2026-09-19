@@ -175,8 +175,8 @@ with file.open("a", encoding="utf-8") as file:
         plt.setp(IV.get_xticklabels(), visible=False)
         IV.set_ylabel(_("Current") + "\n" + _("(Amp)"), fontdict=FONT, rotation=0, loc="center", labelpad=32)
         IV.legend(loc="upper right")
-        IV.grid(c='#ffffff')
-        IV.set_facecolor('#eaeaf2')
+        IV.grid(c='#e0e0e0')
+        IV.set_facecolor('#ffffff')
 
         PV.spines["left"].set_color("none")
         PV.spines["right"].set_color("none")
@@ -192,8 +192,8 @@ with file.open("a", encoding="utf-8") as file:
         PV.set_xlabel(_("Voltage (Volt)"), fontdict=FONT)
         PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
         PV.legend(loc="upper left")
-        PV.grid(c='#ffffff')
-        PV.set_facecolor('#eaeaf2')
+        PV.grid(c='#e0e0e0')
+        PV.set_facecolor('#ffffff')
 
         plt.savefig(f"test_results/{model_ref}.png", dpi=300, bbox_inches="tight")
         plt.close(fig)
