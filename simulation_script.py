@@ -8,6 +8,7 @@ from util import generate_iv, is_float_regex
 import numpy as np
 from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 
 #Create results directory
@@ -170,7 +171,7 @@ with file.open("a", encoding="utf-8") as file:
 
         IV.plot(voltage, current, "#326ef3", linewidth=2, label="I = f(V)")
         IV.set_xlim(0)
-        IV.set_ylim(0, 1.12*max(current))
+        IV.set_ylim(0)
         plt.setp(IV.get_xticklabels(), visible=False)
         IV.set_ylabel(_("Current") + "\n" + _("(Amp)"), fontdict=FONT, rotation=0, loc="center", labelpad=32)
         IV.legend(loc="upper right")
@@ -186,12 +187,15 @@ with file.open("a", encoding="utf-8") as file:
 
         PV.plot(voltage, power, "#44c265", linewidth=2, label="P = f(V)")
         PV.plot(Vmp, Pmax, "#ff6b00", marker="o", label=_("Max power point"))    #highlight max power point
-        PV.set_ylim(0, 1.2*max(power))
+        PV.set_ylim(0)
         PV.set_xlabel(_("Voltage (Volt)"), fontdict=FONT)
         PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
         PV.legend(loc="upper left")
         PV.grid(c='#e0e0e0')
         PV.set_facecolor('#ffffff')
+
+        IV.yaxis.set_major_locator(MaxNLocator(prune='lower'))
+        PV.yaxis.set_major_locator(MaxNLocator(prune='lower'))
 
         plt.savefig(f"test_results/{model_ref}.png", dpi=300, bbox_inches="tight")
         plt.close(fig)
