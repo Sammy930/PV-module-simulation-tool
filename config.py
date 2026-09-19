@@ -1,6 +1,6 @@
 FONT = {
     'family':'Microsoft Sans Serif',
-    'color':'#666666',
+    'color':'#000000',
     'weight':'bold',
     'size':'10'
 }
