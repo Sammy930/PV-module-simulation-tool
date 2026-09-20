@@ -1,6 +1,6 @@
 import gettext
 from math import ceil
-from config import *
+from config_loader import *
 from util import generate_iv, is_float_regex
 import numpy as np
 from scipy.optimize import fsolve

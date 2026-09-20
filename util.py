@@ -1,6 +1,6 @@
 import re
 from types import FunctionType
-from config import *
+from config_loader import *
 import numpy as np
 
 
