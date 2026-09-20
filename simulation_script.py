@@ -119,6 +119,7 @@ u0[2] = initial_guesses[2]
 u0[3] = initial_guesses[3]           
 u0[4] = 0
 
+#Solve the system of equations
 X, infodict, ier, mesg = fsolve(solver_transform, u0, full_output= True)
 
 if ier == 1:
