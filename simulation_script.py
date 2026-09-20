@@ -47,7 +47,8 @@ try:
             Ta = float(input("\n" + _("Cell temperature (°{}) = ").format(UNITS['temperature'])))
             T = (Ta - 32)*(5/9) + 273.15 if UNITS['temperature'] == 'F' else Ta + 273.15
 except ValueError:
-    print("Fatal error: Invalid input, please ensure all parameters entered are numbers")
+    print()
+    print("Fatal error: Invalid input, please ensure all parameters provided are numbers")
     input("Press Enter to exit...")
     sys.exit()
 
@@ -61,49 +62,54 @@ match UNITS['length']:
 
 
 #Extract reference params
+try:
+    def equations(vars):
+        """Uses datasheet values to define the five equations of the De Soto model 
+        and their respective variables."""
+        
+        Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref = vars
 
-def equations(vars):
-    """Uses datasheet values to define the five equations of the De Soto model 
-    and their respective variables."""
-    
-    Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref = vars
+        E = np.exp((Vmp_ref + Imp_ref*Rs_ref)/a_ref)    #Extracted expression for readability
 
-    E = np.exp((Vmp_ref + Imp_ref*Rs_ref)/a_ref)    #Extracted expression for readability
+        #Open circuit conditions evaluated at T_2
+        Eg_2 = Eg_REF*(1 - 0.0002677*(T_2 - T_REF))
+        Iph_2 = Iph_ref + Ki*(T_2 - T_REF)
+        Io_2 = Io_ref*((T_2/T_REF)**3)*np.exp((Eg_REF/(K*T_REF)) - (Eg_2/(K*T_2)))
+        Voc_2 = Voc_ref + Kv*(T_2 - T_REF)
+        a_2 = a_ref*(T_2/T_REF)
 
-    #Open circuit conditions evaluated at T_2
-    Eg_2 = Eg_REF*(1 - 0.0002677*(T_2 - T_REF))
-    Iph_2 = Iph_ref + Ki*(T_2 - T_REF)
-    Io_2 = Io_ref*((T_2/T_REF)**3)*np.exp((Eg_REF/(K*T_REF)) - (Eg_2/(K*T_2)))
-    Voc_2 = Voc_ref + Kv*(T_2 - T_REF)
-    a_2 = a_ref*(T_2/T_REF)
+        #De Soto equations
+        eq1 = (Iph_ref - Io_ref*(np.exp((Isc_ref*Rs_ref)/a_ref) - 1) - Isc_ref*(1 + (Rs_ref/Rsh_ref)))/Isc_ref
+        eq2 = (Iph_ref - Io_ref*(np.exp(Voc_ref/a_ref) - 1) - Voc_ref/Rsh_ref)/Voc_ref
+        eq3 = (Iph_ref - Io_ref*(E - 1) - (Vmp_ref + Imp_ref*(Rs_ref + Rsh_ref))/Rsh_ref)/Imp_ref
+        eq4 = (Imp_ref/Vmp_ref - ((Io_ref/a_ref*E + 1/Rsh_ref)/(1 + (Io_ref*Rs_ref/a_ref)*E + Rs_ref/Rsh_ref)))*(Vmp_ref/Imp_ref)
+        eq5 = (Iph_2 - Io_2*(np.exp(Voc_2/a_2) - 1) - Voc_2/Rsh_ref)/Isc_ref
+        
+        return [eq1, eq2, eq3, eq4, eq5]
 
-    #De Soto equations
-    eq1 = (Iph_ref - Io_ref*(np.exp((Isc_ref*Rs_ref)/a_ref) - 1) - Isc_ref*(1 + (Rs_ref/Rsh_ref)))/Isc_ref
-    eq2 = (Iph_ref - Io_ref*(np.exp(Voc_ref/a_ref) - 1) - Voc_ref/Rsh_ref)/Voc_ref
-    eq3 = (Iph_ref - Io_ref*(E - 1) - (Vmp_ref + Imp_ref*(Rs_ref + Rsh_ref))/Rsh_ref)/Imp_ref
-    eq4 = (Imp_ref/Vmp_ref - ((Io_ref/a_ref*E + 1/Rsh_ref)/(1 + (Io_ref*Rs_ref/a_ref)*E + Rs_ref/Rsh_ref)))*(Vmp_ref/Imp_ref)
-    eq5 = (Iph_2 - Io_2*(np.exp(Voc_2/a_2) - 1) - Voc_2/Rsh_ref)/Isc_ref
-    
-    return [eq1, eq2, eq3, eq4, eq5]
+    def solver_transform(u):
+        """Applies a variable transformation to dynamically scale the variables of 
+        very small (Io_ref) and large (Rsh_ref) values so they all appear to be of the 
+        order of 1 to the fsolve function"""
 
-def solver_transform(u):
-    """Applies a variable transformation to dynamically scale the variables of 
-    very small (Io_ref) and large (Rsh_ref) values so they all appear to be of the 
-    order of 1 to the fsolve function"""
+        u1, u2, u3, u4, u5 = u
 
-    u1, u2, u3, u4, u5 = u
+        Iph_ref = u1
+        Io_ref = 10**u2     
+        a_ref = u3
+        Rs_ref = u4
+        Rsh_ref = 50/(1 - u5)
 
-    Iph_ref = u1
-    Io_ref = 10**u2     
-    a_ref = u3
-    Rs_ref = u4
-    Rsh_ref = 50/(1 - u5)
-
-    return equations([Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref])
+        return equations([Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref])
 
 
-a_guess = (Vmp_ref - Voc_ref)/(np.log(1 - Imp_ref/Isc_ref))
-initial_guesses = np.array([Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0.01, 50])
+    a_guess = (Vmp_ref - Voc_ref)/(np.log(1 - Imp_ref/Isc_ref))
+    initial_guesses = np.array([Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0.01, 50])
+except ZeroDivisionError:
+    print()
+    print("Fatal error: Zero division encountered, please ensure all values provided are valid")
+    input("Press Enter to exit...")
+    sys.exit()
 
 #Reverse transform initial guesses to 'u'
 u0 = np.zeros(5)
