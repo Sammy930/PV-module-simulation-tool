@@ -160,13 +160,17 @@ print(
     _("Fill Factor = {0}").format(ceil(fill_factor*100)/100))
 
 if is_float_regex(length) and is_float_regex(width):
-    match UNITS['length']:
-        case 'mm':
-            A = float(length)*float(width)*1e-6
-        case 'in':
-            A = (float(length)*float(width))/1550        
-    efficiency = (Pmax/(G*A))*100     
-    print(_("Efficiency = {0} %").format(ceil(efficiency*100)/100))
+    if float(length) != 0 and float(width) != 0:
+        match UNITS['length']:
+            case 'mm':
+                A = float(length)*float(width)*1e-6
+            case 'in':
+                A = (float(length)*float(width))/1550        
+        efficiency = (Pmax/(G*A))*100     
+        print(_("Efficiency = {0} %").format(ceil(efficiency*100)/100))
+    else:
+        print()
+        print("Note: length and width can't be equal to zero, please verify your input")
 
 
 #Results visualization
