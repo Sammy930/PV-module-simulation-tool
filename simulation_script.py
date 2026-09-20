@@ -1,4 +1,5 @@
 import gettext
+import sys
 from math import ceil
 from config_loader import *
 from util import generate_iv, is_float_regex
@@ -108,10 +109,16 @@ u0[2] = initial_guesses[2]
 u0[3] = initial_guesses[3]           
 u0[4] = 0
 
-X = fsolve(solver_transform, u0)
+X, infodict, ier, mesg = fsolve(solver_transform, u0, full_output= True)
 
-#Convert final result back to physical units
-X = np.array([X[0], 10**X[1], X[2], X[3], 50/(1.0 - X[4])])
+if ier == 1:
+    #Convert final result back to physical units
+    X = np.array([X[0], 10**X[1], X[2], X[3], 50/(1.0 - X[4])])
+else:
+    print(infodict)
+    print(f"Optimization failed (Code {ier}) : {mesg}" + "\n")
+    input("Press Enter to exit...")
+    sys.exit()
 
 #Params translated to (T,G)
 Iph = (G/G_REF)*(X[0] + Ki*(T - T_REF))
