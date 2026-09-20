@@ -18,34 +18,38 @@ _ = fr_i18n.gettext
 
 #Module specifications
 #STC = Standard Test Conditions
+try:
+    Isc_ref = float(input(_("Short circuit current at STC (A) = ")))
 
-Isc_ref = float(input(_("Short circuit current at STC (A) = ")))
+    Voc_ref = float(input("\n" + _("Open circuit voltage at STC (V) = ")))
 
-Voc_ref = float(input("\n" + _("Open circuit voltage at STC (V) = ")))
+    Imp_ref = float(input("\n" + _("Max power current at STC (A) = ")))
 
-Imp_ref = float(input("\n" + _("Max power current at STC (A) = ")))
+    Vmp_ref = float(input("\n" + _("Max power voltage at STC (V) = ")))
 
-Vmp_ref = float(input("\n" + _("Max power voltage at STC (V) = ")))
+    Ki = float(input("\n" + _("Temperature coefficient of Isc (%/°C) = ")))
+    Ki = (Ki*Isc_ref)/100
 
-Ki = float(input("\n" + _("Temperature coefficient of Isc (%/°C) = ")))
-Ki = (Ki*Isc_ref)/100
+    Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
+    Kv = (Kv*Voc_ref)/100
 
-Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
-Kv = (Kv*Voc_ref)/100
+    G = float(input("\n" + _("Solar irradiation (W/m²) = ")))
 
-G = float(input("\n" + _("Solar irradiation (W/m²) = ")))
+    NOCT = float(input("\nNOCT (°C) = "))
 
-NOCT = float(input("\nNOCT (°C) = "))
-
-match TEMP_SETTING:
-    case 'Ambient': 
-        Ta = float(input("\n" + _("Ambient temperature (°{}) = ").format(UNITS['temperature'])))
-        T = (Ta - 32)*(5/9) if UNITS['temperature'] == 'F' else Ta
-        T = (NOCT - 20)*G/800 + T + 273.15
-        Ta = T - 273.15 if UNITS["temperature"] == 'C' else (T - 273.15)*(9/5) + 32
-    case 'Cell':
-        Ta = float(input("\n" + _("Cell temperature (°{}) = ").format(UNITS['temperature'])))
-        T = (Ta - 32)*(5/9) + 273.15 if UNITS['temperature'] == 'F' else Ta + 273.15
+    match TEMP_SETTING:
+        case 'Ambient': 
+            Ta = float(input("\n" + _("Ambient temperature (°{}) = ").format(UNITS['temperature'])))
+            T = (Ta - 32)*(5/9) if UNITS['temperature'] == 'F' else Ta
+            T = (NOCT - 20)*G/800 + T + 273.15
+            Ta = T - 273.15 if UNITS["temperature"] == 'C' else (T - 273.15)*(9/5) + 32
+        case 'Cell':
+            Ta = float(input("\n" + _("Cell temperature (°{}) = ").format(UNITS['temperature'])))
+            T = (Ta - 32)*(5/9) + 273.15 if UNITS['temperature'] == 'F' else Ta + 273.15
+except ValueError:
+    print("Fatal error: Invalid input, please ensure all parameters entered are numbers")
+    input("Press Enter to exit...")
+    sys.exit()
 
 match UNITS['length']:
     case 'mm':
