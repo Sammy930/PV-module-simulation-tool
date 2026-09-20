@@ -10,6 +10,17 @@ _defaults = ('en', 'Cell', 1.3806503e-23, 1.60217646e-19, 1000, 298.15, 348.15, 
              {"family" : 'Microsoft Sans Serif', "color" : "#000000", "weight" : 'bold', "size" : '10'},
              {"temperature" : 'C', "length" : 'mm'})
 
+#Initialize constants
+K = _defaults[2]  #Boltzmann constant (J/K)
+
+Q = _defaults[3]  #Electron charge (C)
+
+G_REF = _defaults[4] #Irradiation at standard test conditions (W/m²)
+
+T_REF = _defaults[5]    #Temperature at standard test conditions (K)
+
+T_2 = _defaults[6]    #T_REF offset by 50K to evaluate the open-circuit conditions at a different temperature (K)
+
 #Parse config
 try:
     with open(config_path, "rb") as file:
@@ -28,16 +39,6 @@ except FileNotFoundError:
 LANG = config.get("LANG", _defaults[0])
 
 TEMP_SETTING = config.get("TEMP_SETTINGS", _defaults[1])
-
-K = config.get("K", _defaults[2])
-
-Q = config.get("Q", _defaults[3])
-
-G_REF = config.get("G_REF", _defaults[4])
-
-T_REF = config.get("T_REF", _defaults[5])
-
-T_2 = config.get("T_2", _defaults[6])
 
 Eg_REF = config.get("Eg_REF", _defaults[7])
 
