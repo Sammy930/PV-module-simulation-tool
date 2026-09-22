@@ -8,217 +8,221 @@ from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 
+def main():
 
-#i18n localization
+    #i18n localization
 
-fr_i18n = gettext.translation('simulation_script', './locales', fallback=True, languages=[LANG])
-fr_i18n.install()
-_ = fr_i18n.gettext
-
-
-#Module specifications
-#STC = Standard Test Conditions
-try:
-    Isc_ref = float(input(_("Short circuit current at STC (A) = ")))
-
-    Voc_ref = float(input("\n" + _("Open circuit voltage at STC (V) = ")))
-
-    Imp_ref = float(input("\n" + _("Max power current at STC (A) = ")))
-
-    Vmp_ref = float(input("\n" + _("Max power voltage at STC (V) = ")))
-
-    Ki = float(input("\n" + _("Temperature coefficient of Isc (%/°C) = ")))
-    Ki = (Ki*Isc_ref)/100
-
-    Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
-    Kv = (Kv*Voc_ref)/100
-
-    G = float(input("\n" + _("Solar irradiation (W/m²) = ")))
-
-    NOCT = float(input("\nNOCT (°C) = "))
-
-    match TEMP_SETTING:
-        case 'Ambient': 
-            Ta = float(input("\n" + _("Ambient temperature (°{}) = ").format(UNITS['temperature'])))
-            T = (Ta - 32)*(5/9) if UNITS['temperature'] == 'F' else Ta
-            T = (NOCT - 20)*G/800 + T + 273.15
-            Ta = T - 273.15 if UNITS["temperature"] == 'C' else (T - 273.15)*(9/5) + 32
-        case 'Cell':
-            Ta = float(input("\n" + _("Cell temperature (°{}) = ").format(UNITS['temperature'])))
-            T = (Ta - 32)*(5/9) + 273.15 if UNITS['temperature'] == 'F' else Ta + 273.15
-except ValueError:
-    print()
-    print("Fatal error: Invalid input, please ensure all parameters provided are numbers")
-    input("Press Enter to exit...")
-    sys.exit()
-
-match UNITS['length']:
-    case 'mm':
-        length = input("\n" + _("Panel length (optional) (mm) = "))
-        width = input("\n" + _("Panel width (optional) (mm) = "))
-    case 'in':
-        length = input("\n" + _("Panel length (optional) (in) = "))
-        width = input("\n" + _("Panel width (optional) (in) = "))  
+    fr_i18n = gettext.translation('simulation_script', './locales', fallback=True, languages=[LANG])
+    fr_i18n.install()
+    _ = fr_i18n.gettext
 
 
-#Extract reference params
-try:
-    def equations(vars):
-        """Uses datasheet values to define the five equations of the De Soto model 
-        and their respective variables."""
-        
-        Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref = vars
+    #Module specifications
+    #STC = Standard Test Conditions
+    try:
+        Isc_ref = float(input(_("Short circuit current at STC (A) = ")))
 
-        E = np.exp((Vmp_ref + Imp_ref*Rs_ref)/a_ref)    #Extracted expression for readability
+        Voc_ref = float(input("\n" + _("Open circuit voltage at STC (V) = ")))
 
-        #Open circuit conditions evaluated at T_2
-        Eg_2 = Eg_REF*(1 - 0.0002677*(T_2 - T_REF))
-        Iph_2 = Iph_ref + Ki*(T_2 - T_REF)
-        Io_2 = Io_ref*((T_2/T_REF)**3)*np.exp((Eg_REF/(K*T_REF)) - (Eg_2/(K*T_2)))
-        Voc_2 = Voc_ref + Kv*(T_2 - T_REF)
-        a_2 = a_ref*(T_2/T_REF)
+        Imp_ref = float(input("\n" + _("Max power current at STC (A) = ")))
 
-        #De Soto equations
-        eq1 = (Iph_ref - Io_ref*(np.exp((Isc_ref*Rs_ref)/a_ref) - 1) - Isc_ref*(1 + (Rs_ref/Rsh_ref)))/Isc_ref
-        eq2 = (Iph_ref - Io_ref*(np.exp(Voc_ref/a_ref) - 1) - Voc_ref/Rsh_ref)/Voc_ref
-        eq3 = (Iph_ref - Io_ref*(E - 1) - (Vmp_ref + Imp_ref*(Rs_ref + Rsh_ref))/Rsh_ref)/Imp_ref
-        eq4 = (Imp_ref/Vmp_ref - ((Io_ref/a_ref*E + 1/Rsh_ref)/(1 + (Io_ref*Rs_ref/a_ref)*E + Rs_ref/Rsh_ref)))*(Vmp_ref/Imp_ref)
-        eq5 = (Iph_2 - Io_2*(np.exp(Voc_2/a_2) - 1) - Voc_2/Rsh_ref)/Isc_ref
-        
-        return [eq1, eq2, eq3, eq4, eq5]
+        Vmp_ref = float(input("\n" + _("Max power voltage at STC (V) = ")))
 
-    def solver_transform(u):
-        """Applies a variable transformation to dynamically scale the variables of 
-        very small (Io_ref) and large (Rsh_ref) values so they all appear to be of the 
-        order of 1 to the fsolve function"""
+        Ki = float(input("\n" + _("Temperature coefficient of Isc (%/°C) = ")))
+        Ki = (Ki*Isc_ref)/100
 
-        u1, u2, u3, u4, u5 = u
+        Kv = float(input("\n" + _("Temperature coefficient of Voc (%/°C) = ")))
+        Kv = (Kv*Voc_ref)/100
 
-        Iph_ref = u1
-        Io_ref = 10**u2     
-        a_ref = u3
-        Rs_ref = u4
-        Rsh_ref = 50/(1 - u5)
+        G = float(input("\n" + _("Solar irradiation (W/m²) = ")))
 
-        return equations([Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref])
+        NOCT = float(input("\nNOCT (°C) = "))
 
-
-    a_guess = (Vmp_ref - Voc_ref)/(np.log(1 - Imp_ref/Isc_ref))
-    initial_guesses = np.array([Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0.01, 50])
-except ZeroDivisionError:
-    print()
-    print("Fatal error: Zero division encountered, please ensure all values provided are valid")
-    input("Press Enter to exit...")
-    sys.exit()
-
-#Reverse transform initial guesses to 'u'
-u0 = np.zeros(5)
-u0[0] = initial_guesses[0]
-u0[1] = np.log10(initial_guesses[1])                        
-u0[2] = initial_guesses[2]
-u0[3] = initial_guesses[3]           
-u0[4] = 0
-
-#Solve the system of equations
-X, infodict, ier, mesg = fsolve(solver_transform, u0, full_output= True)
-
-if ier == 1:
-    #Convert final result back to physical units
-    X = np.array([X[0], 10**X[1], X[2], X[3], 50/(1.0 - X[4])])
-else:
-    print(infodict)
-    print(f"Optimization failed (Code {ier}) : {mesg}" + "\n")
-    input("Press Enter to exit...")
-    sys.exit()
-
-#Params translated to (T,G)
-Iph = (G/G_REF)*(X[0] + Ki*(T - T_REF))
-Eg = Eg_REF*(1 - 0.0002677*(T - T_REF))
-Io = X[1]*((T/T_REF)**3)*np.exp((Eg_REF/(K*T_REF)) - (Eg/(K*T)))
-a = X[2]*(T/T_REF)
-Rs = X[3]
-Rsh = X[4]*(G_REF/G)
-
-
-IV = generate_iv(Isc_ref, Voc_ref, Iph, Io, Kv, a, T, Rs, Rsh)
-voltage = IV[0]
-current = IV[1]
-power = np.multiply(current, voltage)
-
-
-#Simulation results
-
-Pmax = max(power)
-Vmp = voltage[list(power).index(Pmax)]
-Imp = current[list(power).index(Pmax)]
-fill_factor = Pmax/(current[0]*voltage[-1])
-
-print(
-    "\n" + _("-----------------------------------RESULTS-----------------------------------") + "\n" +
-    _("The maximum power yielded by the module is: {0} Watt").format(ceil(Pmax*100)/100) + "\n" +
-    _("The max power point is estimated at I = {0} Amps and  V = {1} Volts").format(ceil(Imp*100)/100, ceil(Vmp*100)/100) + "\n" +
-    _("Fill Factor = {0}").format(ceil(fill_factor*100)/100))
-
-if is_float_regex(length) and is_float_regex(width):
-    if float(length) != 0 and float(width) != 0:
-        match UNITS['length']:
-            case 'mm':
-                A = float(length)*float(width)*1e-6
-            case 'in':
-                A = (float(length)*float(width))/1550        
-        efficiency = (Pmax/(G*A))*100     
-        print(_("Efficiency = {0} %").format(ceil(efficiency*100)/100))
-    else:
+        match TEMP_SETTING:
+            case 'Ambient': 
+                Ta = float(input("\n" + _("Ambient temperature (°{}) = ").format(UNITS['temperature'])))
+                T = (Ta - 32)*(5/9) if UNITS['temperature'] == 'F' else Ta
+                T = (NOCT - 20)*G/800 + T + 273.15
+                Ta = T - 273.15 if UNITS["temperature"] == 'C' else (T - 273.15)*(9/5) + 32
+            case 'Cell':
+                Ta = float(input("\n" + _("Cell temperature (°{}) = ").format(UNITS['temperature'])))
+                T = (Ta - 32)*(5/9) + 273.15 if UNITS['temperature'] == 'F' else Ta + 273.15
+    except ValueError:
         print()
-        print("Note: length and width can't be equal to zero, please verify your input")
+        print("Fatal error: Invalid input, please ensure all parameters provided are numbers")
+        input("Press Enter to exit...")
+        sys.exit()
+
+    match UNITS['length']:
+        case 'mm':
+            length = input("\n" + _("Panel length (optional) (mm) = "))
+            width = input("\n" + _("Panel width (optional) (mm) = "))
+        case 'in':
+            length = input("\n" + _("Panel length (optional) (in) = "))
+            width = input("\n" + _("Panel width (optional) (in) = "))  
 
 
-#Results visualization
+    #Extract reference params
+    try:
+        def equations(vars):
+            """Uses datasheet values to define the five equations of the De Soto model 
+            and their respective variables."""
+            
+            Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref = vars
 
-fig = plt.figure(num="IV/PV Plot")
-fig.suptitle(_("SOLAR MODULE CHARACTERISTIC CURVES"), fontname=FONT['family'], weight=FONT['weight'], color=FONT['color'], size="18")
-fig.text(
-    0.015, 0.90,
-    (f"Temperature: {format(Ta, ".4g")} (°C)" if UNITS['temperature'] == 'C' else f"Temperature: {format(Ta, ".4g")} (°F)") + f"  |  Irradiation: {format(G, ".4g")} (W/m²)",
-    color=FONT['color'], fontsize=10,
-)
-fig.set_size_inches(9, 9)
-fig.patch.set_facecolor("#ffffff")
+            E = np.exp((Vmp_ref + Imp_ref*Rs_ref)/a_ref)    #Extracted expression for readability
 
-IV = plt.subplot(211)
-PV = plt.subplot(212, sharex=IV)
-plt.subplots_adjust(hspace=0)
+            #Open circuit conditions evaluated at T_2
+            Eg_2 = Eg_REF*(1 - 0.0002677*(T_2 - T_REF))
+            Iph_2 = Iph_ref + Ki*(T_2 - T_REF)
+            Io_2 = Io_ref*((T_2/T_REF)**3)*np.exp((Eg_REF/(K*T_REF)) - (Eg_2/(K*T_2)))
+            Voc_2 = Voc_ref + Kv*(T_2 - T_REF)
+            a_2 = a_ref*(T_2/T_REF)
 
-IV.spines["right"].set_color("none")
-IV.spines["top"].set_color("none")
-IV.tick_params(axis='y', colors=FONT['color'])
+            #De Soto equations
+            eq1 = (Iph_ref - Io_ref*(np.exp((Isc_ref*Rs_ref)/a_ref) - 1) - Isc_ref*(1 + (Rs_ref/Rsh_ref)))/Isc_ref
+            eq2 = (Iph_ref - Io_ref*(np.exp(Voc_ref/a_ref) - 1) - Voc_ref/Rsh_ref)/Voc_ref
+            eq3 = (Iph_ref - Io_ref*(E - 1) - (Vmp_ref + Imp_ref*(Rs_ref + Rsh_ref))/Rsh_ref)/Imp_ref
+            eq4 = (Imp_ref/Vmp_ref - ((Io_ref/a_ref*E + 1/Rsh_ref)/(1 + (Io_ref*Rs_ref/a_ref)*E + Rs_ref/Rsh_ref)))*(Vmp_ref/Imp_ref)
+            eq5 = (Iph_2 - Io_2*(np.exp(Voc_2/a_2) - 1) - Voc_2/Rsh_ref)/Isc_ref
+            
+            return [eq1, eq2, eq3, eq4, eq5]
 
-IV.plot(voltage, current, "#326ef3", linewidth=2, label="I = f(V)")
-IV.set_xlim(0)
-IV.set_ylim(0)
-plt.setp(IV.get_xticklabels(), visible=False)
-IV.set_ylabel(_("Current") + "\n" + _("(Amp)"), fontdict=FONT, rotation=0, loc="center", labelpad=32)
-IV.legend(loc="upper right")
-IV.grid(c='#e0e0e0')
-IV.set_facecolor('#ffffff')
+        def solver_transform(u):
+            """Applies a variable transformation to dynamically scale the variables of 
+            very small (Io_ref) and large (Rsh_ref) values so they all appear to be of the 
+            order of 1 to the fsolve function"""
 
-PV.spines["right"].set_color("none")
-PV.spines["top"].set_color("none")
-PV.spines['bottom'].set_color(FONT['color'])
-PV.tick_params(axis='x', colors=FONT['color'])
-PV.tick_params(axis='y', colors=FONT['color'])
-PV.xaxis.label.set_color(FONT['color'])
+            u1, u2, u3, u4, u5 = u
 
-PV.plot(voltage, power, "#44c265", linewidth=2, label="P = f(V)")
-PV.plot(Vmp, Pmax, "#ff6b00", marker="o", label=_("Max power point"))    #highlight max power point
-PV.set_ylim(0)
-PV.set_xlabel(_("Voltage (Volt)"), fontdict=FONT)
-PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
-PV.legend(loc="upper left")
-PV.grid(c='#e0e0e0')
-PV.set_facecolor('#ffffff')
+            Iph_ref = u1
+            Io_ref = 10**u2     
+            a_ref = u3
+            Rs_ref = u4
+            Rsh_ref = 50/(1 - u5)
 
-IV.yaxis.set_major_locator(MaxNLocator(prune='lower'))
-PV.yaxis.set_major_locator(MaxNLocator(prune='lower'))
+            return equations([Iph_ref, Io_ref, a_ref, Rs_ref, Rsh_ref])
 
-plt.show()
+
+        a_guess = (Vmp_ref - Voc_ref)/(np.log(1 - Imp_ref/Isc_ref))
+        initial_guesses = np.array([Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0.01, 50])
+    except ZeroDivisionError:
+        print()
+        print("Fatal error: Zero division encountered, please ensure all values provided are valid")
+        input("Press Enter to exit...")
+        sys.exit()
+
+    #Reverse transform initial guesses to 'u'
+    u0 = np.zeros(5)
+    u0[0] = initial_guesses[0]
+    u0[1] = np.log10(initial_guesses[1])                        
+    u0[2] = initial_guesses[2]
+    u0[3] = initial_guesses[3]           
+    u0[4] = 0
+
+    #Solve the system of equations
+    X, infodict, ier, mesg = fsolve(solver_transform, u0, full_output= True)
+
+    if ier == 1:
+        #Convert final result back to physical units
+        X = np.array([X[0], 10**X[1], X[2], X[3], 50/(1.0 - X[4])])
+    else:
+        print(infodict)
+        print(f"Optimization failed (Code {ier}) : {mesg}" + "\n")
+        input("Press Enter to exit...")
+        sys.exit()
+
+    #Params translated to (T,G)
+    Iph = (G/G_REF)*(X[0] + Ki*(T - T_REF))
+    Eg = Eg_REF*(1 - 0.0002677*(T - T_REF))
+    Io = X[1]*((T/T_REF)**3)*np.exp((Eg_REF/(K*T_REF)) - (Eg/(K*T)))
+    a = X[2]*(T/T_REF)
+    Rs = X[3]
+    Rsh = X[4]*(G_REF/G)
+
+
+    IV = generate_iv(Isc_ref, Voc_ref, Iph, Io, Kv, a, T, Rs, Rsh)
+    voltage = IV[0]
+    current = IV[1]
+    power = np.multiply(current, voltage)
+
+
+    #Simulation results
+
+    Pmax = max(power)
+    Vmp = voltage[list(power).index(Pmax)]
+    Imp = current[list(power).index(Pmax)]
+    fill_factor = Pmax/(current[0]*voltage[-1])
+
+    print(
+        "\n" + _("-----------------------------------RESULTS-----------------------------------") + "\n" +
+        _("The maximum power yielded by the module is: {0} Watt").format(ceil(Pmax*100)/100) + "\n" +
+        _("The max power point is estimated at I = {0} Amps and  V = {1} Volts").format(ceil(Imp*100)/100, ceil(Vmp*100)/100) + "\n" +
+        _("Fill Factor = {0}").format(ceil(fill_factor*100)/100))
+
+    if is_float_regex(length) and is_float_regex(width):
+        if float(length) != 0 and float(width) != 0:
+            match UNITS['length']:
+                case 'mm':
+                    A = float(length)*float(width)*1e-6
+                case 'in':
+                    A = (float(length)*float(width))/1550        
+            efficiency = (Pmax/(G*A))*100     
+            print(_("Efficiency = {0} %").format(ceil(efficiency*100)/100))
+        else:
+            print()
+            print("Note: length and width can't be equal to zero, please verify your input")
+
+
+    #Results visualization
+
+    fig = plt.figure(num="IV/PV Plot")
+    fig.suptitle(_("SOLAR MODULE CHARACTERISTIC CURVES"), fontname=FONT['family'], weight=FONT['weight'], color=FONT['color'], size="18")
+    fig.text(
+        0.015, 0.90,
+        (f"Temperature: {format(Ta, ".4g")} (°C)" if UNITS['temperature'] == 'C' else f"Temperature: {format(Ta, ".4g")} (°F)") + f"  |  Irradiation: {format(G, ".4g")} (W/m²)",
+        color=FONT['color'], fontsize=10,
+    )
+    fig.set_size_inches(9, 9)
+    fig.patch.set_facecolor("#ffffff")
+
+    IV = plt.subplot(211)
+    PV = plt.subplot(212, sharex=IV)
+    plt.subplots_adjust(hspace=0)
+
+    IV.spines["right"].set_color("none")
+    IV.spines["top"].set_color("none")
+    IV.tick_params(axis='y', colors=FONT['color'])
+
+    IV.plot(voltage, current, "#326ef3", linewidth=2, label="I = f(V)")
+    IV.set_xlim(0)
+    IV.set_ylim(0)
+    plt.setp(IV.get_xticklabels(), visible=False)
+    IV.set_ylabel(_("Current") + "\n" + _("(Amp)"), fontdict=FONT, rotation=0, loc="center", labelpad=32)
+    IV.legend(loc="upper right")
+    IV.grid(c='#e0e0e0')
+    IV.set_facecolor('#ffffff')
+
+    PV.spines["right"].set_color("none")
+    PV.spines["top"].set_color("none")
+    PV.spines['bottom'].set_color(FONT['color'])
+    PV.tick_params(axis='x', colors=FONT['color'])
+    PV.tick_params(axis='y', colors=FONT['color'])
+    PV.xaxis.label.set_color(FONT['color'])
+
+    PV.plot(voltage, power, "#44c265", linewidth=2, label="P = f(V)")
+    PV.plot(Vmp, Pmax, "#ff6b00", marker="o", label=_("Max power point"))    #highlight max power point
+    PV.set_ylim(0)
+    PV.set_xlabel(_("Voltage (Volt)"), fontdict=FONT)
+    PV.set_ylabel(_("Power") + "\n(Watt)", fontdict=FONT, rotation=0, loc="center", labelpad=32)
+    PV.legend(loc="upper left")
+    PV.grid(c='#e0e0e0')
+    PV.set_facecolor('#ffffff')
+
+    IV.yaxis.set_major_locator(MaxNLocator(prune='lower'))
+    PV.yaxis.set_major_locator(MaxNLocator(prune='lower'))
+
+    plt.show()
+
+if __name__ == "__main__":
+    main()
