@@ -38,7 +38,7 @@ except FileNotFoundError:
 
 LANG = config.get("LANG", _defaults[0])
 
-TEMP_SETTING = config.get("TEMP_SETTINGS", _defaults[1])
+TEMP_SETTING = config.get("TEMP_SETTING", _defaults[1])
 
 Eg_REF = config.get("Eg_REF", _defaults[7])
 
