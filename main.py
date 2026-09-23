@@ -182,18 +182,19 @@ def main():
     #Results visualization
 
     fig = plt.figure(num="IV/PV Plot")
+    fig.set_layout_engine('constrained')
+    fig.get_layout_engine().set(rect=[0.01, 0.01, 0.95, 0.9])
     fig.suptitle(_("SOLAR MODULE CHARACTERISTIC CURVES"), fontname=FONT['family'], weight=FONT['weight'], color=FONT['color'], size="18")
     fig.text(
         0.015, 0.90,
         (f"Temperature: {format(Ta, ".4g")} (°C)" if UNITS['temperature'] == 'C' else f"Temperature: {format(Ta, ".4g")} (°F)") + f"  |  Irradiation: {format(G, ".4g")} (W/m²)",
         color=FONT['color'], fontsize=10,
     )
-    fig.set_size_inches(9, 9)
+    fig.set_size_inches(5.5, 6)
     fig.patch.set_facecolor("#ffffff")
 
     IV = plt.subplot(211)
     PV = plt.subplot(212, sharex=IV)
-    plt.subplots_adjust(hspace=0)
 
     IV.spines["right"].set_color("none")
     IV.spines["top"].set_color("none")
