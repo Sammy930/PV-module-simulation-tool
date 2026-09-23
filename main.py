@@ -173,8 +173,10 @@ def main():
             efficiency = (Pmax/(G*A))*100     
             print(_("Efficiency = {0} %").format(ceil(efficiency*100)/100))
         else:
-            print()
             print("Note: length and width can't be equal to zero, please verify your input")
+    print("-----------------------------------------------------------------------------")
+    print()
+    print("Generating graphs...")
 
 
     #Results visualization
@@ -226,6 +228,8 @@ def main():
     PV.yaxis.set_major_locator(MaxNLocator(prune='lower'))
 
     plt.show()
+
+    input("Done. press Enter to exit")
 
 if __name__ == "__main__":
     main()
