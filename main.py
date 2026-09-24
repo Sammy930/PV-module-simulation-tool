@@ -1,7 +1,6 @@
-import gettext
 import sys
 from math import ceil
-from pathlib import Path
+from i18n import _
 from config_loader import *
 from util import generate_iv, is_float_regex
 import numpy as np
@@ -10,15 +9,6 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 
 def main():
-
-    #i18n localization
-    script_dir = Path(__file__).resolve().parent
-    locales = script_dir / "./locales"
-
-    fr_i18n = gettext.translation('simulation_script', locales, fallback=True, languages=[LANG])
-    fr_i18n.install()
-    _ = fr_i18n.gettext
-
 
     #Module specifications
     #STC = Standard Test Conditions

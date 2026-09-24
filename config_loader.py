@@ -10,6 +10,8 @@ _defaults = ('en', 'Cell', 1.3806503e-23, 1.60217646e-19, 1000, 298.15, 348.15, 
              {"family" : 'Microsoft Sans Serif', "color" : "#000000", "weight" : 'bold', "size" : '10'},
              {"temperature" : 'C', "length" : 'mm'})
 
+LANG = _defaults[0] #Default language
+
 #Initialize constants
 K = _defaults[2]  #Boltzmann constant (J/K)
 
