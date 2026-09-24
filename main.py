@@ -52,8 +52,8 @@ def main():
                 T = (Ta - 32)*(5/9) + 273.15 if UNITS['temperature'] == 'F' else Ta + 273.15
     except ValueError:
         print()
-        print("Fatal error: Invalid input, please ensure all parameters provided are numbers")
-        input("Press Enter to exit...")
+        print(_("Fatal error: Invalid input, please ensure all parameters provided are numbers"))
+        input(_("Press Enter to exit..."))
         sys.exit()
 
     match UNITS['length']:
@@ -111,8 +111,8 @@ def main():
         initial_guesses = np.array([Isc_ref, Isc_ref*(np.exp(-Voc_ref/a_guess)), a_guess, 0.01, 50])
     except ZeroDivisionError:
         print()
-        print("Fatal error: Zero division encountered, please ensure all values provided are valid")
-        input("Press Enter to exit...")
+        print(_("Fatal error: Zero division encountered, please ensure all values provided are valid"))
+        input(_("Press Enter to exit..."))
         sys.exit()
 
     #Reverse transform initial guesses to 'u'
@@ -131,8 +131,8 @@ def main():
         X = np.array([X[0], 10**X[1], X[2], X[3], 50/(1.0 - X[4])])
     else:
         print(infodict)
-        print(f"Optimization failed (Code {ier}) : {mesg}" + "\n")
-        input("Press Enter to exit...")
+        print(_("Optimization failed (Code {0}) : {1}").format(ier, mesg) + "\n")
+        input(_("Press Enter to exit..."))
         sys.exit()
 
     #Params translated to (T,G)
@@ -173,10 +173,10 @@ def main():
             efficiency = (Pmax/(G*A))*100     
             print(_("Efficiency = {0} %").format(ceil(efficiency*100)/100))
         else:
-            print("Note: length and width can't be equal to zero, please verify your input")
+            print(_("Note: length and width can't be equal to zero, please verify your input"))
     print("-----------------------------------------------------------------------------")
     print()
-    print("Generating graphs...")
+    print(_("Generating graphs..."))
 
 
     #Results visualization
@@ -230,7 +230,7 @@ def main():
 
     plt.show()
 
-    input("Done. press Enter to exit")
+    input(_("Done. press Enter to exit"))
 
 if __name__ == "__main__":
     main()

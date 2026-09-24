@@ -117,3 +117,35 @@ msgstr "Tension (Volt)"
 #: .\simulation_script.py:169
 msgid "Power"
 msgstr "Puissance"
+
+#: main.py:55
+msgid ""
+"Fatal error: Invalid input, please ensure all parameters provided are numbers"
+msgstr "Erreur: Saisie invalide, veuillez vérifier que tous les paramètres sont des nombres"
+
+#: main.py:56 main.py:115 main.py:135
+msgid "Press Enter to exit..."
+msgstr "Appuyez sur Entrée pour quitter..."
+
+#: main.py:114
+msgid ""
+"Fatal error: Zero division encountered, please ensure all values provided "
+"are valid"
+msgstr "Erreur: Division par zéro détectée, veuillez vous assurer que toutes les valeurs fournies sont valides"
+
+#: main.py:134
+#, python-brace-format
+msgid "Optimization failed (Code {0}) : {1}"
+msgstr "Échec de l'optimisation (Code {0}) : {1}"
+
+#: main.py:176
+msgid "Note: length and width can't be equal to zero, please verify your input"
+msgstr "Remarque : la longueur et la largeur ne peuvent pas être égales à zéro, veuillez vérifier votre saisie"
+
+#: main.py:179
+msgid "Generating graphs..."
+msgstr "Génération des graphiques en cours..."
+
+#: main.py:233
+msgid "Done. press Enter to exit"
+msgstr "Terminé. Appuyez sur Entrée pour quitter"

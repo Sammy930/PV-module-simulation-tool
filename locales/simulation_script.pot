@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-20 18:17+0100\n"
+"POT-Creation-Date: 2026-09-24 11:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,103 +17,135 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\simulation_script.py:20
+#: main.py:26
 msgid "Short circuit current at STC (A) = "
 msgstr ""
 
-#: .\simulation_script.py:22
+#: main.py:28
 msgid "Open circuit voltage at STC (V) = "
 msgstr ""
 
-#: .\simulation_script.py:24
+#: main.py:30
 msgid "Max power current at STC (A) = "
 msgstr ""
 
-#: .\simulation_script.py:26
+#: main.py:32
 msgid "Max power voltage at STC (V) = "
 msgstr ""
 
-#: .\simulation_script.py:28
+#: main.py:34
 msgid "Temperature coefficient of Isc (%/°C) = "
 msgstr ""
 
-#: .\simulation_script.py:31
+#: main.py:37
 msgid "Temperature coefficient of Voc (%/°C) = "
 msgstr ""
 
-#: .\simulation_script.py:34
+#: main.py:40
 msgid "Solar irradiation (W/m²) = "
 msgstr ""
 
-#: .\simulation_script.py:40
+#: main.py:46
 msgid "Ambient temperature (°{}) = "
 msgstr ""
 
-#: .\simulation_script.py:45
+#: main.py:51
 msgid "Cell temperature (°{}) = "
 msgstr ""
 
-#: .\simulation_script.py:50
+#: main.py:55
+msgid ""
+"Fatal error: Invalid input, please ensure all parameters provided are numbers"
+msgstr ""
+
+#: main.py:56 main.py:115 main.py:135
+msgid "Press Enter to exit..."
+msgstr ""
+
+#: main.py:61
 msgid "Panel length (optional) (mm) = "
 msgstr ""
 
-#: .\simulation_script.py:51
+#: main.py:62
 msgid "Panel width (optional) (mm) = "
 msgstr ""
 
-#: .\simulation_script.py:53
+#: main.py:64
 msgid "Panel length (optional) (in) = "
 msgstr ""
 
-#: .\simulation_script.py:54
+#: main.py:65
 msgid "Panel width (optional) (in) = "
 msgstr ""
 
-#: .\simulation_script.py:112
+#: main.py:114
+msgid ""
+"Fatal error: Zero division encountered, please ensure all values provided "
+"are valid"
+msgstr ""
+
+#: main.py:134
+#, python-brace-format
+msgid "Optimization failed (Code {0}) : {1}"
+msgstr ""
+
+#: main.py:161
 msgid ""
 "-----------------------------------RESULTS-----------------------------------"
 msgstr ""
 
-#: .\simulation_script.py:113
+#: main.py:162
 #, python-brace-format
 msgid "The maximum power yielded by the module is: {0} Watt"
 msgstr ""
 
-#: .\simulation_script.py:114
+#: main.py:163
 #, python-brace-format
 msgid "The max power point is estimated at I = {0} Amps and  V = {1} Volts"
 msgstr ""
 
-#: .\simulation_script.py:115
+#: main.py:164
 #, python-brace-format
 msgid "Fill Factor = {0}"
 msgstr ""
 
-#: .\simulation_script.py:124
+#: main.py:174
 #, python-brace-format
 msgid "Efficiency = {0} %"
 msgstr ""
 
-#: .\simulation_script.py:130
+#: main.py:176
+msgid "Note: length and width can't be equal to zero, please verify your input"
+msgstr ""
+
+#: main.py:179
+msgid "Generating graphs..."
+msgstr ""
+
+#: main.py:187
 msgid "SOLAR MODULE CHARACTERISTIC CURVES"
 msgstr ""
 
-#: .\simulation_script.py:152
+#: main.py:207
 msgid "Current"
 msgstr ""
 
-#: .\simulation_script.py:152
+#: main.py:207
 msgid "(Amp)"
 msgstr ""
 
-#: .\simulation_script.py:166
+#: main.py:220
 msgid "Max power point"
 msgstr ""
 
-#: .\simulation_script.py:168
+#: main.py:222
 msgid "Voltage (Volt)"
 msgstr ""
 
-#: .\simulation_script.py:169
+#: main.py:223
 msgid "Power"
+msgstr ""
+
+#: main.py:233
+msgid "Done. press Enter to exit"
 msgstr ""
