@@ -11,7 +11,8 @@ This work was part of a university project of which the objective was to study t
 In the end i have decided to rewrite the original Matlab program as a Python script.
 
 ## Usage:
-Just download the source code and run simulation_script.py
+- Download and extract the .zip file and run PVSim.exe
+- You can edit config.toml to change language and other settings.
 
 ## Third party libraries used for this project:
   - [Numpy](https://numpy.org/) and [Scipy](https://scipy.org/) for numerical calculations.
