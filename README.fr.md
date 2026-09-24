@@ -10,7 +10,8 @@ Ce travail fait partie d'un projet universitaire dont l'objectif était d'étudi
 Finalement, j'ai décidé de réécrire le programme Matlab en Python.
 
 ## Utilisation:
-Il suffit de télécharger le code source et d'exécuter simulation_script.py
+- Télécharger et extraire le fichier .zip, puis lancer PVSim.exe
+- Vous pouvez modifier config.toml pour changer la langue et d'autres paramètres.
 
 ## Bibliothèques tierces utilisées pour ce projet:
   - [Numpy](https://numpy.org/) et [Scipy](https://scipy.org/) pour les calculs numériques.
